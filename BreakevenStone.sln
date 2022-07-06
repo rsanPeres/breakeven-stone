@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneApi", "BreakevenStoneApi\BreakevenStoneApi.csproj", "{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneDomain", "BreakevenStoneDomain\BreakevenStoneDomain.csproj", "{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneWorker", "BreakevenStoneWorker\BreakevenStoneWorker.csproj", "{D616A26D-0C07-478C-A944-BF22FAA9243B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneRepository", "BreakevenStoneRepository\BreakevenStoneRepository.csproj", "{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneApplication", "BreakevenStoneApplication\BreakevenStoneApplication.csproj", "{04514788-D218-4293-815D-FB94CA2F833B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneInfra", "BreakevenStoneInfra\BreakevenStoneInfra.csproj", "{4EF33F5B-1EE1-470B-B7A5-735086A1B155}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04514788-D218-4293-815D-FB94CA2F833B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04514788-D218-4293-815D-FB94CA2F833B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04514788-D218-4293-815D-FB94CA2F833B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04514788-D218-4293-815D-FB94CA2F833B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
