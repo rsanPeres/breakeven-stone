@@ -3,6 +3,7 @@ using BreakevenStoneInfra;
 using System.Collections.Generic;
 using System.Linq;
 using BreakevenStoneDomain.Entities.Dtos;
+using AutoMapper;
 
 namespace BreakevenStoneApplication.Services
 {
@@ -10,11 +11,13 @@ namespace BreakevenStoneApplication.Services
     {
         public List<Employee> Employee { get; set; }
         public ApplicationContext AppContext { get; set; }
+        private IMapper _mapper;
 
-        public EmployeeService()
+
+        public EmployeeService(IMapper mapper, ApplicationContext context)
         {
-            Employee = new List<Employee>();
-            AppContext = new ApplicationContext();
+            AppContext = context;
+            _mapper = mapper;
         }
 
         public void EmployeeAdd(EmployeeDto employeeAdd)
@@ -46,7 +49,7 @@ namespace BreakevenStoneApplication.Services
 
         public void EmployeeUpdate(string cpf, string name)
         {
-            AppContext.User.Where(p => p.CPF == cpf).ToList().ForEach(p => p.UserFirstName = name);
+            AppContext.Employee.Where(p => p.CPF == cpf).ToList().ForEach(p => p.UserFirstName = name);
             AppContext.SaveChanges();
         }
 

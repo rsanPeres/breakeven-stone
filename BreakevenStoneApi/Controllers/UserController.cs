@@ -1,4 +1,5 @@
-﻿using BreakevenStoneApi.Controllers.Requests;
+﻿using AutoMapper;
+using BreakevenStoneApi.Controllers.Requests;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -9,63 +10,50 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/user")]
     public class UserController : Controller
     {
-        //private readonly ICommandScheduler _commandScheduler;
+        private readonly IMapper _mapper;
         private ClientService _service { get; set; }
-        public UserController()
+        public UserController(ClientService service, IMapper mapper)
         {
-          //  _commandScheduler = commandScheduler;
-            _service = new ClientService();
+            _service = service;
+            _mapper = mapper;
         }
 
         // GET: Client
         [HttpGet("userByName")]
-        public IActionResult UserGetByName(string userByN)//criar o command e o handler
+        public IActionResult UserGetByName(UpdateUserRequest userRequest)
         {
-            UserDto userByName = new UserDto();
-            userByName.FirstName = userByN;
-            _service.ClientGetByName(userByName);
-            return Ok(userByName);
-        }
-        // Post: Client
-        //[HttpPost("login")]
-        //public IActionResult UserLogin(User userLogin)
-        //{
-        //    var test = userLogin.Id;
-        //    return Created("", userLogin);
-        //}
-
-        [HttpPost("userCreate")]
-        public IActionResult UserCreate(UserDto userCreat)
-        {
-            _service.ClientAdd(userCreat);
-            return Created("", userCreat);
-
+            var userDto = _mapper.Map<UserDto>(userRequest);
+            var user = _service.ClientGetByName(userDto);
+            if(user == null) return NotFound();
+            return Ok(user);
         }
 
-        [HttpPost("userCreateWithCqrs")]
-        public void UserCreateWithCqrs(UserRequest request)
+        [HttpPost]
+        public IActionResult UserCreate(UserRequest userRequest)
         {
-            /*var command = new CreateUserCommand(
-                request,
-                IdentityGenerator.NewSequentialIdentity(),
-                request.RequestIdempotencyKey(),
-                request.ApplicationKey(),
-                request.SagaProccesKey()
-                );
-            _commandScheduler.RunNow(command);*/
+            var userDto = _mapper.Map<UserDto>(userRequest);
+            var user = _service.ClientAdd(userDto);
+            if (user == null) return NotFound();
+            return Ok(user);
         }
 
-        [HttpPatch]
-        public IActionResult Update(string cpf, string name)
+        [HttpPatch("update")]
+        public IActionResult Update(UpdateUserRequest userRequest)
         {
-            _service.ClientUpdate(cpf, name);
-            return Ok();
+            var userDto = _mapper.Map<UserDto>(userRequest);
+            var users = _service.ClientUpdate(userDto);
+            if(users != null)return Ok();
+            return BadRequest(users);
         }
 
-        [HttpDelete]
-        public void Delete(string cpf)
+        [HttpDelete("delete")]
+        public IActionResult Delete(UpdateUserRequest userRequest)
         {
-            _service.ClientDelbyCpf(cpf);
+            var userDto = _mapper.Map<UserDto>(userRequest);
+            var user = _service.ClientDelbyCpf(userDto);
+            if (user == null) return Ok();
+            return BadRequest(user);
+
         }
     }
 }

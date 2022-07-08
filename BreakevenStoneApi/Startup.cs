@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BreakevenStoneApplication.Services;
+using BreakevenStoneInfra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +30,13 @@ namespace BreakevenStoneApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<ApplicationContext>(opt =>
+            opt.UseSqlServer(Configuration.GetConnectionString("CRUDCredit")));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());//?
+            services.AddScoped<ClientService, ClientService>();
+            services.AddScoped<EmployeeService, EmployeeService>();
+            services.AddScoped<ProductService, ProductService>();
+            services.AddScoped<EquipmentService, EquipmentService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BreakevenStoneApi", Version = "v1" });
@@ -40,7 +50,7 @@ namespace BreakevenStoneApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BreakevenStoneApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "BreakevenStoneApi v1"));
             }
 
             app.UseHttpsRedirection();

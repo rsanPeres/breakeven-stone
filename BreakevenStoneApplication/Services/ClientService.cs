@@ -1,63 +1,77 @@
-﻿using BreakevenStoneDomain.Entities;
+﻿using AutoMapper;
+using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BreakevenStoneApplication.Services
 {
     public class ClientService
     {
-        public ApplicationContext AppContext { get; set; }
+        private ApplicationContext AppContext { get; set; }
+        private IMapper _mapper;
 
-        public ClientService()
+        public ClientService(IMapper mapper, ApplicationContext context)
         {
-            AppContext = new ApplicationContext();
+            AppContext = context;
+            _mapper = mapper;
         }
 
-        public User ClientGetByName(UserDto userFind)
-        {
-            AppContext.Database.EnsureCreated();
-            var userf = AppContext.User
-                       .Where(us => us.UserFirstName == userFind.FirstName)
-                       .FirstOrDefault<User>();
-            return userf;
-        }
-
-        public User ClientFindByCPF(UserDto cliCPF)
+        public UserDto ClientGetByName(UserDto dto)
         {
             AppContext.Database.EnsureCreated();
             var userf = AppContext.User
-                       .Where(us => us.UserFirstName == cliCPF.CPF)
-                       .FirstOrDefault<User>();
-            return userf;
+                       .Where(us => us.UserFirstName == dto.FirstName);
+            if (userf == null)
+            {
+                return null;
+            }
+            UserDto user = new UserDto(); 
+            _mapper.Map(user, userf);
+
+            return user;
         }
 
-        public void ClientAdd(UserDto clientDto)
+        public UserDto ClientFindByCPF(UserDto cliCPF)
+        {
+            AppContext.Database.EnsureCreated();
+            var userf = AppContext.User
+                            .FirstOrDefault(us => us.UserFirstName == cliCPF.CPF);
+
+            if (userf == null) return null;
+            return _mapper.Map<UserDto>(userf);
+        }
+
+        public UserDto ClientAdd(UserDto clientDto)
         {
             var user = new User(clientDto.Password, clientDto.FirstName, clientDto.LastName, clientDto.CPF, clientDto.Birthday, clientDto.Address);
 
             AppContext.Database.EnsureCreated();
             AppContext.User.Add(user);
             AppContext.SaveChanges();
+            if (user != null) return _mapper.Map<UserDto>(user);
+            return null;
         }
 
-        public void ClientUpdate(string upCPF, string name)
+        public UserDto ClientUpdate(UserDto userD)
         {
-            AppContext.User.Where(p => p.CPF == upCPF).ToList().ForEach(p => p.UserFirstName = name);
+            var user = AppContext.User.Where(p => p.CPF == userD.CPF).ToList();
+            user.ForEach(p => p.UserFirstName = userD.FirstName);
             AppContext.SaveChanges();
+            if (user.Count > 0) return _mapper.Map<UserDto>(user);
+            return null;
         }
 
-        public void ClientDelbyCpf(string cpf)
+        public UserDto ClientDelbyCpf(UserDto userD)
         {
             
-            var listRemove = AppContext.User.Where(p => p.CPF == cpf).ToList();
-            foreach(var item in listRemove)
-            {
-                AppContext.User.Remove(item);
-                AppContext.SaveChanges();
-            }
+            var userRemove = AppContext.User.First(p => p.CPF == userD.CPF);
+            AppContext.User.Remove(userRemove);
+            AppContext.SaveChanges();
 
-            
+            if (userRemove != null) return _mapper.Map<UserDto>(userRemove);
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BreakevenStoneDomain.Entities;
+﻿using AutoMapper;
+using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
 using System.Collections.Generic;
@@ -10,28 +11,28 @@ namespace BreakevenStoneApplication.Services
     {
         public List<Equipment> Equipments { get; set; }
         public ApplicationContext AppContext { get; set; }
-
-        public EquipmentService()
+        private IMapper _mapper;
+        public EquipmentService(IMapper mapper, ApplicationContext context)
         {
-            Equipments = new List<Equipment>();
-            AppContext = new ApplicationContext();
+            AppContext = context;
+            _mapper = mapper;
         }
 
         public void EquipmentAdd(EquipmentDto equipAdd)
         {
             Equipment equip = new Equipment(equipAdd.Name, equipAdd.Description, equipAdd.Price);
-            Equipments.Add(equip);
             AppContext.Database.EnsureCreated();
             AppContext.Equipment.Add(equip);
             AppContext.SaveChanges();
         }
 
-        public Equipment EquipmentGetByName(EquipmentDto equip)
+        public List<Equipment> EquipmentGetByName(EquipmentDto equip)
         {
             AppContext.Database.EnsureCreated();
             var equipf = AppContext.Equipment
-                       .Where(pr => pr.Name == equip.Name);
-            return (Equipment)equipf;
+                       .Where(pr => pr.Name == equip.Name).ToList();
+             return equipf;
+            
         }
 
         public void EquipmentUpdate(string upName, string newName)

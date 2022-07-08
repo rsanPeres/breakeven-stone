@@ -3,7 +3,6 @@
 namespace BreakevenStoneApi.Controllers.Requests
 {
     public class UserRequest 
-        //: ClientBoundRequest
     {
         public string Password { get; set; }
         public string FirstName { get; set; }

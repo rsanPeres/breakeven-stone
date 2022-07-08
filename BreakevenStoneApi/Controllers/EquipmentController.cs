@@ -4,27 +4,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BreakevenStoneApi.Controllers
 {
+    [ApiController]
+    [Route("api/v1/equipment")]
     public class EquipmentController : Controller
     {
         private EquipmentService _service { get; set; }
 
-        public EquipmentController()
+        public EquipmentController(EquipmentService service)
         {
-            _service = new EquipmentService();
+            _service = service;
         }
 
-        //Get : Equipment
         [HttpGet("equipmentByName")]
         public IActionResult EquipmentGetByName(string equipmentByN)
         {
             EquipmentDto equipmentByName = new EquipmentDto();
             equipmentByName.Name = equipmentByN;
             _service.EquipmentGetByName(equipmentByName);
-            return Ok(equipmentByName);//ver sobre restful
+            return Ok(equipmentByName);
         }
 
-        // Post: Equipment
-        [HttpPost("EquipmentCreate")]
+        [HttpPost("equipmentCreate")]
         public IActionResult EquipmentCreate(EquipmentDto equipmentCreat)
         {
             _service.EquipmentAdd(equipmentCreat);
@@ -35,7 +35,6 @@ namespace BreakevenStoneApi.Controllers
         public void DeleteEquipment(string name)
         {
             _service.Delete(name);
-                
         }
     
     }

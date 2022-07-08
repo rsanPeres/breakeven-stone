@@ -11,12 +11,11 @@ namespace BreakevenStoneApi.Controllers
     {
         private ProductService _service { get; set; }
 
-        public ProductController()
+        public ProductController(ProductService service)
         {
-            _service = new ProductService();
+            _service = service;
         }
 
-        //Get : Product
         [HttpGet("productByName")]
         public IActionResult ProductGetByName(string productByN)
         {
@@ -25,16 +24,14 @@ namespace BreakevenStoneApi.Controllers
                 Name = productByN
             };
             _service.ProductGetByName(productByName);
-            return Ok(productByName);//ver sobre restful
+            return Ok(productByName);
         }
 
-        // Post: Product
         [HttpPost("productCreate")]
         public IActionResult ProductCreate(ProductDto productCreat)
         {
             _service.ProductAdd(productCreat);
             return Created("", productCreat);
         }
-
     }
 }

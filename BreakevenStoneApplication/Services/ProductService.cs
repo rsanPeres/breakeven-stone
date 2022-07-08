@@ -1,4 +1,5 @@
-﻿using BreakevenStoneDomain.Entities;
+﻿using AutoMapper;
+using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
 using System.Collections.Generic;
@@ -11,16 +12,17 @@ namespace BreakevenStoneApplication.Services
         public List<Product> Products { get; set; }
         public ApplicationContext AppContext { get; set; }
 
-        public ProductService()
+        public IMapper _mapper;
+
+        public ProductService(IMapper mapper, ApplicationContext context)
         {
-            Products = new List<Product>();
-            AppContext = new ApplicationContext();
+            AppContext = context;
+            _mapper = mapper;
         }
 
         public void ProductAdd(ProductDto prodAdd)
         {
             Product productsAdd = new Product(prodAdd.Status, prodAdd.Name, prodAdd.Price, prodAdd.DateOut);
-            Products.Add(productsAdd);
             AppContext.Database.EnsureCreated();
             AppContext.Product.Add(productsAdd);
             AppContext.SaveChanges();
@@ -38,7 +40,6 @@ namespace BreakevenStoneApplication.Services
         {
             AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.Name = newname);
             AppContext.SaveChanges();
-
         }
     }
 }

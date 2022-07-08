@@ -4,16 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BreakevenStoneApi.Controllers
 {
+    [ApiController]
+    [Route("api/v1/employee")]
     public class EmployeeController : Controller
     {
         private EmployeeService _service { get; set; }
 
-        public EmployeeController()
+        public EmployeeController(EmployeeService service)
         {
-            _service = new EmployeeService();
+            _service = service;
         }
+    
 
-        //Get : Employee
         [HttpGet("employeeByName")]
         public IActionResult EmployeeGetByName(string employeeByN)
         {
@@ -22,9 +24,6 @@ namespace BreakevenStoneApi.Controllers
             _service.EmployeeGetByName(employeeByName);
             return Ok(employeeByName);
         }
-
-        // Post: Employee
-        [HttpPost("login")]
 
         [HttpPost("employeeCreate")]
         public IActionResult EmployeeCreate(EmployeeDto employeeCreat)
