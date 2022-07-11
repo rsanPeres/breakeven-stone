@@ -34,8 +34,8 @@ namespace BreakevenStoneApi.Mappers
         private void DtoToUser()
         {
             CreateMap<UserDto, User>()
-                .ForMember(p => p.UserFirstName, x => x.MapFrom(a => a.UserFirstName))
-                .ForMember(p => p.UserLastName, x => x.MapFrom(a => a.UserLastName))
+                .ForMember(p => p.UserFirstName, x => x.MapFrom(a => a.FirstName))
+                .ForMember(p => p.UserLastName, x => x.MapFrom(a => a.LastName))
                 .ReverseMap();
 
         }
@@ -43,8 +43,8 @@ namespace BreakevenStoneApi.Mappers
         private void UserToDto()
         {
             CreateMap<User, UserDto>()
-                .ForMember(p => p.UserFirstName, x => x.MapFrom(a => a.UserFirstName))
-                .ForMember(p => p.UserLastName, x => x.MapFrom(a => a.UserLastName))
+                .ForMember(p => p.FirstName, x => x.MapFrom(a => a.UserFirstName))
+                .ForMember(p => p.LastName, x => x.MapFrom(a => a.UserLastName))
                 .ReverseMap();
         }
 

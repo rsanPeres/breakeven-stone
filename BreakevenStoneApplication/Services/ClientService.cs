@@ -24,15 +24,11 @@ namespace BreakevenStoneApplication.Services
             var userf = AppContext.User
                        .Where(us => us.UserFirstName == name.ToLower())
                        .FirstOrDefault<User>();
-            if (userf != null)
+            if (userf != null) { 
                 return _mapper.Map<UserDto>(userf);
 
-                return null;
             }
-            UserDto user = new UserDto(); 
-            _mapper.Map(user, userf);
-
-            return user;
+            return null;
         }
 
         public UserDto ClientFindByCPF(UserDto cliCPF)
@@ -47,7 +43,7 @@ namespace BreakevenStoneApplication.Services
 
         public UserDto ClientAdd(UserDto clientDto)
         {
-            var user = new User(clientDto.Password, clientDto.UserFirstName.ToLower().Trim(), clientDto.UserFirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, clientDto.Address);
+            var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, clientDto.Address);
             if (user != null)
             {
             AppContext.Database.EnsureCreated();
@@ -63,7 +59,7 @@ namespace BreakevenStoneApplication.Services
             var user = AppContext.User.Where(p => p.CPF == userD.CPF).ToList();
             if (user.Count > 0)
             {
-                AppContext.User.Where(p => p.CPF == userD.CPF).ToList().ForEach(p => p.UserFirstName = userD.UserFirstName.ToLower());
+                AppContext.User.Where(p => p.CPF == userD.CPF).ToList().ForEach(p => p.UserFirstName = userD.FirstName.ToLower());
             AppContext.SaveChanges();
                 return _mapper.Map<UserDto>(user.First());
             }
