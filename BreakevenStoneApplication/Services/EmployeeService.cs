@@ -1,10 +1,14 @@
-﻿namespace BreakevenStoneApplication.Services
+﻿using BreakevenStoneDomain.Entities;
+using BreakevenStoneInfra;
+using System.Collections.Generic;
+using System.Linq;
+using BreakevenStoneDomain.Entities.Dtos;
+using AutoMapper;
+
+namespace BreakevenStoneApplication.Services
 {
     public class EmployeeService
     {
-<<<<<<< Updated upstream
-        
-=======
         public List<Employee> Employee { get; set; }
         public ApplicationContext AppContext { get; set; }
         private IMapper _mapper;
@@ -18,7 +22,9 @@
 
         public EmployeeDto EmployeeAdd(EmployeeDto employeeAdd)
         {
-            Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary, employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName, employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address);
+            Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary, 
+                employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName, 
+                employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address);
             if (employee != null) { 
                 AppContext.Database.EnsureCreated();
                 AppContext.Employee.Add(employee);
@@ -77,6 +83,5 @@
             }
             return null;
         }
->>>>>>> Stashed changes
     }
 }

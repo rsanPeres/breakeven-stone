@@ -12,9 +12,9 @@ namespace BreakevenStoneInfra
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
+            /*optionsBuilder
                 .UseSqlServer(
-                    "Data Source=localhost,1433;Initial Catalog=BreakevenStone;Integrated Security=False;User Id=sa;Password=Stone@2022!;Persist Security Info=True");
+                    "Data Source=localhost,1433;Initial Catalog=BreakevenStone;Integrated Security=False;User Id=sa;Password=Stone@2022!;Persist Security Info=True");*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

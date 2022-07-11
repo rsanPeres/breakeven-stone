@@ -15,9 +15,10 @@ namespace BreakevenStoneApi.Controllers
         private IMapper _mapper;
         private ProductService _service { get; set; }
 
-        public ProductController(ProductService service)
+        public ProductController(ProductService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet("productByName")]
