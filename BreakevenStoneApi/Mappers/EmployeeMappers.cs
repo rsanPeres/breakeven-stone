@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BreakevenStoneApi.Controllers.Requests;
+using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;

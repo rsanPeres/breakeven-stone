@@ -1,12 +1,11 @@
-﻿using BreakevenStoneApi.Controllers.Requests.UserRequests;
+﻿using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
 using FluentValidation;
 
 namespace BreakevenStoneApi.Controllers.Requests.Validators
 {
-    public class CreateUserValidator : AbstractValidator<UserRequest>
+    public class EmployeeValidator : AbstractValidator<CreateEmployeeRequest>
     {
-
-        public CreateUserValidator()
+        public EmployeeValidator()
         {
             RuleFor(p => p.CPF)
                 .NotNull()
@@ -24,6 +23,10 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators
                 .NotNull()
                 .MinimumLength(8);
 
+            RuleFor(p => p.Password)
+                .NotNull()
+                .NotEmpty()
+                .MinimumLength(8);
         }
     }
 }

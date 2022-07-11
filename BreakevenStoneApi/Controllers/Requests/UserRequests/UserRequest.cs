@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BreakevenStoneApi.Controllers.Requests
+namespace BreakevenStoneApi.Controllers.Requests.UserRequests
 {
-    public class UserRequest 
+    public class UserRequest
     {
         public string Password { get; set; }
         public string FirstName { get; set; }
@@ -10,6 +10,7 @@ namespace BreakevenStoneApi.Controllers.Requests
         public string CPF { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
+        public string Email { get; set; }
 
     }
 }

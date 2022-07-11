@@ -1,4 +1,4 @@
-﻿namespace BreakevenStoneApi.Controllers.Requests
+﻿namespace BreakevenStoneApi.Controllers.Requests.ProductRequests
 {
     public class GetProductRequest
     {

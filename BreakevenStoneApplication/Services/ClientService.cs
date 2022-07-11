@@ -43,7 +43,7 @@ namespace BreakevenStoneApplication.Services
 
         public UserDto ClientAdd(UserDto clientDto)
         {
-            var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, clientDto.Address);
+            var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, clientDto.Address, clientDto.Email);
             if (user != null)
             {
             AppContext.Database.EnsureCreated();

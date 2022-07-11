@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BreakevenStoneApi.Controllers.Requests;
+using BreakevenStoneApi.Controllers.Requests.ProductRequests;
+using BreakevenStoneApi.Controllers.Requests.UserRequests;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;

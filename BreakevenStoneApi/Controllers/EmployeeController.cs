@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BreakevenStoneApi.Controllers.Requests;
+using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Entities.Dtos;
@@ -20,7 +20,7 @@ namespace BreakevenStoneApi.Controllers
             _service = service;
             _mapper = mapper;
         }
-    
+
         [HttpGet]
         public IActionResult EmployeeGetByName(GetEmployeeRequest employeeByN)
         {
@@ -40,7 +40,7 @@ namespace BreakevenStoneApi.Controllers
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
-        {
+                {
                     Success = false,
                     Data = null,
                     Messages = e.Message
@@ -63,7 +63,7 @@ namespace BreakevenStoneApi.Controllers
                     Messages = null
                 };
                 return Ok(response);
-        }
+            }
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
@@ -94,7 +94,7 @@ namespace BreakevenStoneApi.Controllers
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
-        {
+                {
                     Success = false,
                     Data = null,
                     Messages = e.Message
