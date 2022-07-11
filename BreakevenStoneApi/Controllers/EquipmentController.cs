@@ -39,7 +39,7 @@ namespace BreakevenStoneApi.Controllers
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
-                {
+        {
                     Success = false,
                     Data = null,
                     Messages = e.Message
@@ -61,7 +61,7 @@ namespace BreakevenStoneApi.Controllers
                     Messages = null
                 };
                 return Ok(response);
-            }
+        }
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
@@ -91,14 +91,14 @@ namespace BreakevenStoneApi.Controllers
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
-                {
+        {
                     Success = false,
                     Data = null,
                     Messages = e.Message
                 };
                 return BadRequest(response);
     }
-}
+        }
     
     }
 }

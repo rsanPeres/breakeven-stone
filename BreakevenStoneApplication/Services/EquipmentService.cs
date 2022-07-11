@@ -23,11 +23,11 @@ namespace BreakevenStoneApplication.Services
             Equipment equip = new Equipment(equipAdd.Name, equipAdd.Description, equipAdd.Price);
             if (equip != null)
             {
-                AppContext.Database.EnsureCreated();
-                AppContext.Equipment.Add(equip);
-                AppContext.SaveChanges();
+            AppContext.Database.EnsureCreated();
+            AppContext.Equipment.Add(equip);
+            AppContext.SaveChanges();
                 return _mapper.Map<EquipmentDto>(equip);
-            }
+        }
             return null;
         }
 
@@ -47,9 +47,9 @@ namespace BreakevenStoneApplication.Services
         {
             var up = AppContext.Equipment.Where(p => p.Name == upName).FirstOrDefault<Equipment>();
             if (up != null)
-            {
-                AppContext.Equipment.Where(p => p.Name == upName).ToList().ForEach(p => p.Name = newName);
-                AppContext.SaveChanges();
+        {
+            AppContext.Equipment.Where(p => p.Name == upName).ToList().ForEach(p => p.Name = newName);
+            AppContext.SaveChanges();
                 return _mapper.Map<EquipmentDto>(up);
             }
             return null;

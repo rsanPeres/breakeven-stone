@@ -33,7 +33,7 @@ namespace BreakevenStoneApi.Controllers
                     Success = true,
                     Data = ret,
                     Messages = null
-                };
+            };
                 return Ok(response);
             }
             catch (Exception e)

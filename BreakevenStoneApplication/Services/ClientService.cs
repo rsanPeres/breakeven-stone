@@ -2,6 +2,7 @@
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BreakevenStoneApplication.Services
@@ -26,7 +27,12 @@ namespace BreakevenStoneApplication.Services
             if (userf != null)
                 return _mapper.Map<UserDto>(userf);
 
-            return null;
+                return null;
+            }
+            UserDto user = new UserDto(); 
+            _mapper.Map(user, userf);
+
+            return user;
         }
 
         public UserDto ClientFindByCPF(UserDto cliCPF)
@@ -44,12 +50,12 @@ namespace BreakevenStoneApplication.Services
             var user = new User(clientDto.Password, clientDto.UserFirstName.ToLower().Trim(), clientDto.UserFirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, clientDto.Address);
             if (user != null)
             {
-                AppContext.Database.EnsureCreated();
-                AppContext.User.Add(user);
-                AppContext.SaveChanges();
+            AppContext.Database.EnsureCreated();
+            AppContext.User.Add(user);
+            AppContext.SaveChanges();
                 return _mapper.Map<UserDto>(user);
             }
-             return null;
+            return null;
         }
 
         public UserDto ClientUpdate(UserDto userD)
@@ -58,7 +64,7 @@ namespace BreakevenStoneApplication.Services
             if (user.Count > 0)
             {
                 AppContext.User.Where(p => p.CPF == userD.CPF).ToList().ForEach(p => p.UserFirstName = userD.UserFirstName.ToLower());
-                AppContext.SaveChanges();
+            AppContext.SaveChanges();
                 return _mapper.Map<UserDto>(user.First());
             }
             return null;
@@ -66,12 +72,12 @@ namespace BreakevenStoneApplication.Services
 
         public UserDto ClientDelbyCpf(UserDto userD)
         {
-
+            
             var userRemove = AppContext.User.First(p => p.CPF == userD.CPF);
             if (userRemove != null)
             {
-                AppContext.User.Remove(userRemove);
-                AppContext.SaveChanges();
+            AppContext.User.Remove(userRemove);
+            AppContext.SaveChanges();
                 return _mapper.Map<UserDto>(userRemove);
             }
             return null;

@@ -25,11 +25,11 @@ namespace BreakevenStoneApplication.Services
             Product productAdd = new Product(prodAdd.Status, prodAdd.Name, prodAdd.Price, prodAdd.DateOut);
             if (productAdd != null)
             {
-                AppContext.Database.EnsureCreated();
+            AppContext.Database.EnsureCreated();
                 AppContext.Product.Add(productAdd);
-                AppContext.SaveChanges();
+            AppContext.SaveChanges();
                 return _mapper.Map<ProductDto>(productAdd);
-            }
+        }
             return null;
         }
 
@@ -47,9 +47,9 @@ namespace BreakevenStoneApplication.Services
         {
             var prod = AppContext.Product.Where(p => p.Name == name).ToList();
             if(prod != null)
-            {
-                AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.Name = newname);
-                AppContext.SaveChanges();
+        {
+            AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.Name = newname);
+            AppContext.SaveChanges();
                 return _mapper.Map<ProductDto>(prod);
             }
             return null;
@@ -65,6 +65,6 @@ namespace BreakevenStoneApplication.Services
                 return _mapper.Map<ProductDto>(product);
             }
             return null;
-        } 
+        }
     }
 }

@@ -53,8 +53,8 @@ namespace BreakevenStoneApi.Controllers
         {
             try
             {
-                var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientAdd(userDto);
+            var userDto = _mapper.Map<UserDto>(userRequest);
+            var user = _service.ClientAdd(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
                 var response = new ApiResponse<GetUserResponse>()
                 {
@@ -80,7 +80,7 @@ namespace BreakevenStoneApi.Controllers
         public IActionResult Update(UpdateUserRequest userRequest)
         {
             try {
-                var userDto = _mapper.Map<UserDto>(userRequest);
+            var userDto = _mapper.Map<UserDto>(userRequest);
                 var user = _service.ClientUpdate(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
                 var response = new ApiResponse<GetUserResponse>()
@@ -110,8 +110,8 @@ namespace BreakevenStoneApi.Controllers
         {
             try
             {
-                var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientDelbyCpf(userDto);
+            var userDto = _mapper.Map<UserDto>(userRequest);
+            var user = _service.ClientDelbyCpf(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
                 var response = new ApiResponse<GetUserResponse>()
                 {
