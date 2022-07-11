@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+=======
+using BreakevenStoneApplication.Services;
+using BreakevenStoneInfra;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> Stashed changes
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace BreakevenStoneApi
 {
