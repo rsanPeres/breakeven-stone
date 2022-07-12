@@ -1,4 +1,4 @@
-﻿namespace BreakevenStoneApi.Controllers.Requests.ProductRequests
+﻿namespace BreakevenStoneApi.Controllers.Requests.UserRequests
 {
     public class UpdateUserRequest
     {

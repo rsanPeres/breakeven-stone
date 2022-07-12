@@ -1,7 +1,7 @@
 ﻿using BreakevenStoneApi.Controllers.Requests.EquipmentRequest;
 using FluentValidation;
 
-namespace BreakevenStoneApi.Controllers.Requests.Validators
+namespace BreakevenStoneApi.Controllers.Requests.Validators.EquipmentValidators
 {
     public class EquipmentValidator : AbstractValidator<CreateEquipmentRequest>
     {

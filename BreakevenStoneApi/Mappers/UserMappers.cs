@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BreakevenStoneApi.Controllers.Requests.ProductRequests;
 using BreakevenStoneApi.Controllers.Requests.UserRequests;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneDomain.Entities;
@@ -18,6 +17,7 @@ namespace BreakevenStoneApi.Mappers
             UpdateToUserDto();
             GetRequestToDto();
             UserToGetResponse();
+            DeleteUserRequestToUserDto();
         }
 
         private void RequestToUserDto()
@@ -65,6 +65,12 @@ namespace BreakevenStoneApi.Mappers
         private void UserToGetResponse()
         {
             CreateMap<UserDto, GetUserResponse>()
+                .ReverseMap();
+        }
+
+        private void DeleteUserRequestToUserDto()
+        {
+            CreateMap<DeleteUserRequest, UserDto>()
                 .ReverseMap();
         }
 

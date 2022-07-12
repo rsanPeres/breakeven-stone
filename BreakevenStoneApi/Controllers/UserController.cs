@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using BreakevenStoneApi.Controllers.Requests.ProductRequests;
 using BreakevenStoneApi.Controllers.Requests.UserRequests;
-using BreakevenStoneApi.Controllers.Requests.Validators;
+using BreakevenStoneApi.Controllers.Requests.Validators.UserValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Entities.Dtos;
@@ -66,6 +65,7 @@ namespace BreakevenStoneApi.Controllers
                 var userDto = _mapper.Map<UserDto>(userRequest);
                 var user = _service.ClientAdd(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
+
                 var response = new ApiResponse<GetUserResponse>()
                 {
                     Success = true,
@@ -91,9 +91,18 @@ namespace BreakevenStoneApi.Controllers
         {
             try
             {
+                UpdateUserValidator validator = new UpdateUserValidator();
+
+                var result = validator.Validate(userRequest);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
                 var userDto = _mapper.Map<UserDto>(userRequest);
                 var user = _service.ClientUpdate(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
+
                 var response = new ApiResponse<GetUserResponse>()
                 {
                     Success = true,
@@ -117,13 +126,22 @@ namespace BreakevenStoneApi.Controllers
 
 
         [HttpDelete]
-        public IActionResult Delete(UpdateUserRequest userRequest)
+        public IActionResult Delete(DeleteUserRequest userRequest)
         {
             try
             {
+                DeleteUserValidator validator = new DeleteUserValidator();
+
+                var result = validator.Validate(userRequest);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
                 var userDto = _mapper.Map<UserDto>(userRequest);
                 var user = _service.ClientDelbyCpf(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
+
                 var response = new ApiResponse<GetUserResponse>()
                 {
                     Success = true,

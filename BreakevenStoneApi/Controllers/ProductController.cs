@@ -49,11 +49,12 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost("productCreate")]
-        public IActionResult ProductCreate(ProductDto productCreat)
+        public IActionResult ProductCreate(ProductRequest productCreate)
         {
             try
             {
-                var prod = _service.ProductAdd(productCreat);
+                var dto = _mapper.Map<ProductDto>(productCreate);
+                var prod = _service.ProductAdd(dto);
                 var ret = _mapper.Map<GetProductResponse>(prod);
                 var response = new ApiResponse<GetProductResponse>()
                 {

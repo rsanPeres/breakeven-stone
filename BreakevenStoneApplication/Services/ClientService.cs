@@ -26,7 +26,6 @@ namespace BreakevenStoneApplication.Services
                        .FirstOrDefault<User>();
             if (userf != null) { 
                 return _mapper.Map<UserDto>(userf);
-
             }
             return null;
         }

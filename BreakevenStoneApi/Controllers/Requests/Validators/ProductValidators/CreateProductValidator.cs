@@ -1,7 +1,7 @@
 ﻿using BreakevenStoneApi.Controllers.Requests.ProductRequests;
 using FluentValidation;
 
-namespace BreakevenStoneApi.Controllers.Requests.Validators
+namespace BreakevenStoneApi.Controllers.Requests.Validators.ProductValidators
 {
     public class ProductValidator : AbstractValidator<ProductRequest>
     {

@@ -8,6 +8,6 @@ namespace BreakevenStoneApi.Controllers.Requests.ProductRequests
         public string Status { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public DateTime DateOut { get; set; }
+        
     }
 }

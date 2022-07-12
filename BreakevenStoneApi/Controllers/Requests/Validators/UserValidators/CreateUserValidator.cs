@@ -1,7 +1,7 @@
 ﻿using BreakevenStoneApi.Controllers.Requests.UserRequests;
 using FluentValidation;
 
-namespace BreakevenStoneApi.Controllers.Requests.Validators
+namespace BreakevenStoneApi.Controllers.Requests.Validators.UserValidators
 {
     public class CreateUserValidator : AbstractValidator<UserRequest>
     {

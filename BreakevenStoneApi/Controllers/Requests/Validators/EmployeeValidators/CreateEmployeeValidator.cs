@@ -1,7 +1,7 @@
 ﻿using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
 using FluentValidation;
 
-namespace BreakevenStoneApi.Controllers.Requests.Validators
+namespace BreakevenStoneApi.Controllers.Requests.Validators.EmployeeValidators
 {
     public class EmployeeValidator : AbstractValidator<CreateEmployeeRequest>
     {
