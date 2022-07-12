@@ -14,7 +14,7 @@ namespace BreakevenStoneDomain.Entities
         public string Address { get; set; }
         public string Email { get; set; }
 
-        public User() { }
+        public User() { }   
         public User(string password, string userFirstName, string userLastName, string cPF, DateTime birthday, string address, string email)
         {
             Id = Guid.NewGuid();

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BreakevenStoneApi.Controllers.Requests.Validators.EmployeeValidators
 {
-    public class EmployeeValidator : AbstractValidator<CreateEmployeeRequest>
+    public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeRequest>
     {
-        public EmployeeValidator()
+        public CreateEmployeeValidator()
         {
             RuleFor(p => p.CPF)
                 .NotNull()

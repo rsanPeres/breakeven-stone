@@ -106,6 +106,11 @@ namespace BreakevenStoneInfra.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Email");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("varchar(50)")

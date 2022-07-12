@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreakevenStoneInfra.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220706144518_Initial")]
-    partial class Initial
+    [Migration("20220712181558_addEmail")]
+    partial class addEmail
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,6 +107,11 @@ namespace BreakevenStoneInfra.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Email");
 
                     b.Property<string>("Password")
                         .IsRequired()

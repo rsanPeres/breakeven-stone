@@ -44,28 +44,27 @@ namespace BreakevenStoneApplication.Services
             {
                 return null;
             }
-            var user = _mapper.Map<EmployeeDto>(userf);
+            return _mapper.Map<EmployeeDto>(userf);
 
-            return user;
         }
 
-        public EmployeeDto EmployeeFindByCPF(EmployeeDto emplCPF)
+        public EmployeeDto EmployeeFindByCPF(string emplCPF)
         {
             AppContext.Database.EnsureCreated();
             var employeef = AppContext.Employee
-                       .Where(em => em.CPF == emplCPF.CPF)
+                       .Where(em => em.CPF == emplCPF)
                        .FirstOrDefault<Employee>();
             if(employeef == null) return null;
             return _mapper.Map<EmployeeDto>(employeef);
 
         }
 
-        public EmployeeDto EmployeeUpdate(string cpf, string name)
+        public EmployeeDto EmployeeUpdate(string cpf, string function)
         {
             var emplRet = AppContext.Employee.Where(p => p.CPF == cpf).ToList();
             if(emplRet.Count() > 0)
             {
-                AppContext.Employee.Where(p => p.CPF == cpf).ToList().ForEach(p => p.UserFirstName = name);
+                AppContext.Employee.Where(p => p.CPF == cpf).ToList().ForEach(p => p.Fuction = function);
                 AppContext.SaveChanges();
                 return _mapper.Map<EmployeeDto>(emplRet);
             }

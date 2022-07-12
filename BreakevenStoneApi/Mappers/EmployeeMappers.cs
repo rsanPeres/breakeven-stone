@@ -12,6 +12,8 @@ namespace BreakevenStoneApi.Mappers
         {
             RequestToDto();
             EmployeeToDto();
+            DtoToResponse();
+            CreateEmployeeRequestToDto();
         }
 
         private void RequestToDto()
@@ -31,6 +33,12 @@ namespace BreakevenStoneApi.Mappers
         private void DtoToResponse()
         {
             CreateMap<EmployeeDto, GetEmployeeResponse>()
+                .ReverseMap();
+        }
+
+        private void CreateEmployeeRequestToDto()
+        {
+            CreateMap<CreateEmployeeRequest, EmployeeDto>()
                 .ReverseMap();
         }
     }

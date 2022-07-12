@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BreakevenStoneInfra.Migrations
 {
-    public partial class Initial : Migration
+    public partial class addEmail : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,7 +49,8 @@ namespace BreakevenStoneInfra.Migrations
                     CPF = table.Column<string>(type: "varchar(11)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Address = table.Column<string>(type: "varchar(200)", nullable: true)
+                    Address = table.Column<string>(type: "varchar(200)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

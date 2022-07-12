@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
+using BreakevenStoneApi.Controllers.Requests.Validators.EmployeeValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Entities.Dtos;
@@ -22,11 +23,19 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult EmployeeGetByName(GetEmployeeRequest employeeByN)
+        public IActionResult EmployeeGetByName(GetEmployeeRequest request)
         {
             try
             {
-                var user = _service.EmployeeGetByName(employeeByN.FirstName);
+                GetEmployeeValidator validator = new GetEmployeeValidator();
+
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var user = _service.EmployeeFindByCPF(request.Cpf);
 
                 var ret = _mapper.Map<GetEmployeeResponse>(user);
                 var response = new ApiResponse<GetEmployeeResponse>()
@@ -49,12 +58,21 @@ namespace BreakevenStoneApi.Controllers
             }
         }
 
-        [HttpPost("employeeCreate")]
-        public IActionResult EmployeeCreate(EmployeeDto employeeCreat)
+        [HttpPost]
+        public IActionResult EmployeeCreate(CreateEmployeeRequest employeeCreate)
         {
             try
             {
-                var user = _service.EmployeeAdd(employeeCreat);
+                CreateEmployeeValidator validator = new CreateEmployeeValidator();
+
+                var result = validator.Validate(employeeCreate);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var request = _mapper.Map<EmployeeDto>(employeeCreate);
+                var user = _service.EmployeeAdd(request);
                 var ret = _mapper.Map<GetEmployeeResponse>(user);
                 var response = new ApiResponse<GetEmployeeResponse>()
                 {
@@ -76,12 +94,55 @@ namespace BreakevenStoneApi.Controllers
             }
         }
 
-        [HttpDelete("delete")]
-        public IActionResult Delete(string name)
+        [HttpPatch]
+        public IActionResult Update(UpdateEmployeeRequest request)
         {
             try
             {
-                var user = _service.EmployeeDelbyCpf(name);
+                UpdateEmployeeValidator validator = new UpdateEmployeeValidator();
+
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var user = _service.EmployeeUpdate(request.Cpf, request.Function);
+                var ret = _mapper.Map<GetEmployeeResponse>(user);
+                var response = new ApiResponse<GetEmployeeResponse>()
+                {
+                    Success = true,
+                    Data = ret,
+                    Messages = null
+                };
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                var response = new ApiResponse<string>()
+                {
+                    Success = false,
+                    Data = null,
+                    Messages = e.Message
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(GetEmployeeRequest request)
+        {
+            try
+            {
+                GetEmployeeValidator validator = new GetEmployeeValidator();
+
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var user = _service.EmployeeDelbyCpf(request.Cpf);
                 var ret = _mapper.Map<GetEmployeeResponse>(user);
                 var response = new ApiResponse<GetEmployeeResponse>()
                 {

@@ -7,10 +7,11 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators.UserValidators
     {
         public UpdateUserValidator()
         {
-            RuleFor(p => p.Cpf)
+            /*RuleFor(p => p.Cpf)
                 .MinimumLength(11)
                 .MaximumLength(11)
                 .NotEmpty();
+            */
             
             RuleFor(p => p.Name)
                 .NotEmpty()
