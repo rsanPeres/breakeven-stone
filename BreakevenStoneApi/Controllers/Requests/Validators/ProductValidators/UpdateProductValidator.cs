@@ -3,18 +3,14 @@ using FluentValidation;
 
 namespace BreakevenStoneApi.Controllers.Requests.Validators.ProductValidators
 {
-    public class CreateProductValidator : AbstractValidator<ProductRequest>
+    public class UpdateProductValidator : AbstractValidator<UpdateProductRequest>
     {
-        public CreateProductValidator()
+        public UpdateProductValidator()
         {
             RuleFor(p => p.Name)
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(2);
-
-            RuleFor(p => p.Price)
-                .NotNull()
-                .NotEmpty();
         }
     }
 }

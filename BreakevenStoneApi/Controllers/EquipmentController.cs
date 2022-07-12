@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.EquipmentRequest;
+using BreakevenStoneApi.Controllers.Requests.Validators.EquipmentValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Entities.Dtos;
@@ -21,11 +22,19 @@ namespace BreakevenStoneApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("equipmentByName")]
+        [HttpGet]
         public IActionResult EquipmentGetByName(GetEquipmentRequest request)
         {
             try
             {
+                GetEquipmentValidator validator = new GetEquipmentValidator();
+
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
                 var equip = _service.EquipmentGetByName(request.Name);
                 var ret = _mapper.Map<GetEquipmentResponse>(equip);
                 var response = new ApiResponse<GetEquipmentResponse>()
@@ -48,37 +57,20 @@ namespace BreakevenStoneApi.Controllers
             }
         }
 
-        [HttpPost("equipmentCreate")]
-        public IActionResult EquipmentCreate(EquipmentDto equipmentCreat)
+        [HttpPost]
+        public IActionResult EquipmentCreate(CreateEquipmentRequest request)
         {
-            try { 
-                var equip = _service.EquipmentAdd(equipmentCreat);
-                var ret = _mapper.Map<GetEquipmentResponse>(equip);
-                var response = new ApiResponse<GetEquipmentResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
-        }
-            catch (Exception e)
-            {
-                var response = new ApiResponse<string>()
-                {
-                    Success = false,
-                    Data = null,
-                    Messages = e.Message
-                };
-                return BadRequest(response);
-    }
-}
+            try {
+                CreateEquipmentValidator validator = new CreateEquipmentValidator();
 
-        [HttpDelete("delete")]
-        public IActionResult DeleteEquipment(GetEquipmentRequest equipment)
-        {
-            try { 
-                var equip = _service.Delete(equipment.Name);
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var dto = _mapper.Map<EquipmentDto>(request);
+                var equip = _service.EquipmentAdd(dto);
                 var ret = _mapper.Map<GetEquipmentResponse>(equip);
                 var response = new ApiResponse<GetEquipmentResponse>()
                 {
@@ -91,13 +83,83 @@ namespace BreakevenStoneApi.Controllers
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
-        {
+                {
                     Success = false,
                     Data = null,
                     Messages = e.Message
                 };
                 return BadRequest(response);
-    }
+            }
+        }
+
+        [HttpPatch]
+        public IActionResult UpdateEquipment(UpdateEquipmentRequest request)
+        {
+            try
+            {
+                UpdateEquipmentValidator validator = new UpdateEquipmentValidator();
+
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var equip = _service.EquipmentUpdate(request.Name, request.NewName);
+                var ret = _mapper.Map<GetEquipmentResponse>(equip);
+                var response = new ApiResponse<GetEquipmentResponse>()
+                {
+                    Success = true,
+                    Data = ret,
+                    Messages = null
+                };
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                var response = new ApiResponse<string>()
+                {
+                    Success = false,
+                    Data = null,
+                    Messages = e.Message
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteEquipment(GetEquipmentRequest request)
+        {
+            try
+            {
+                GetEquipmentValidator validator = new GetEquipmentValidator();
+
+                var result = validator.Validate(request);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
+                var equip = _service.Delete(request.Name);
+                var ret = _mapper.Map<GetEquipmentResponse>(equip);
+                var response = new ApiResponse<GetEquipmentResponse>()
+                {
+                    Success = true,
+                    Data = ret,
+                    Messages = null
+                };
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                var response = new ApiResponse<string>()
+                {
+                    Success = false,
+                    Data = null,
+                    Messages = e.Message
+                };
+                return BadRequest(response);
+            }
         }
     
     }

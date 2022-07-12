@@ -3,16 +3,12 @@ using FluentValidation;
 
 namespace BreakevenStoneApi.Controllers.Requests.Validators.ProductValidators
 {
-    public class CreateProductValidator : AbstractValidator<ProductRequest>
+    public class GetProductValidator : AbstractValidator<GetProductRequest>
     {
-        public CreateProductValidator()
+        public GetProductValidator()
         {
             RuleFor(p => p.Name)
-                .NotEmpty()
-                .NotNull()
-                .MinimumLength(2);
-
-            RuleFor(p => p.Price)
+                .MinimumLength(2)
                 .NotNull()
                 .NotEmpty();
         }

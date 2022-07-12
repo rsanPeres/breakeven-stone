@@ -3,18 +3,19 @@ using FluentValidation;
 
 namespace BreakevenStoneApi.Controllers.Requests.Validators.EquipmentValidators
 {
-    public class CreateEquipmentValidator : AbstractValidator<CreateEquipmentRequest>
+    public class UpdateEquipmentValidator : AbstractValidator<UpdateEquipmentRequest>
     {
-        public CreateEquipmentValidator()
+        public UpdateEquipmentValidator()
         {
             RuleFor(p => p.Name)
-                .NotEmpty()
-                .NotNull()
-                .MinimumLength(3);
-
-            RuleFor(p => p.Description)
+                .MinimumLength(2)
                 .NotNull()
                 .NotEmpty();
+
+            RuleFor(p => p.NewName)
+                .MinimumLength(2)
+                .NotNull();
+
         }
     }
 }

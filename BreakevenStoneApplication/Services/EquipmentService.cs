@@ -2,6 +2,7 @@
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,8 +49,8 @@ namespace BreakevenStoneApplication.Services
             var up = AppContext.Equipment.Where(p => p.Name == upName).FirstOrDefault<Equipment>();
             if (up != null)
         {
-            AppContext.Equipment.Where(p => p.Name == upName).ToList().ForEach(p => p.Name = newName);
-            AppContext.SaveChanges();
+                AppContext.Equipment.Where(p => p.Name == upName).ToList().ForEach(p => p.Name = newName);
+                AppContext.SaveChanges();
                 return _mapper.Map<EquipmentDto>(up);
             }
             return null;

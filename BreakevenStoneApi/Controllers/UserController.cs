@@ -27,6 +27,14 @@ namespace BreakevenStoneApi.Controllers
         {
             try
             {
+                GetUserValidator validator = new GetUserValidator();
+
+                var result = validator.Validate(userRequest);
+                if (result.IsValid == false)
+                {
+                    throw new Exception(result.ToString());
+                }
+
                 var user = _service.ClientGetByName(userRequest.FirstName);
                 var ret = _mapper.Map<GetUserResponse>(user);
                 var response = new ApiResponse<GetUserResponse>()

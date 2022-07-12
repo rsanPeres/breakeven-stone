@@ -2,6 +2,7 @@
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,13 +44,14 @@ namespace BreakevenStoneApplication.Services
             return null;
         }
 
-        public ProductDto ProductUpdate(string name, string newname)
+        public ProductDto ProductUpdate(string name, string newName, DateTime dateOut)
         {
             var prod = AppContext.Product.Where(p => p.Name == name).ToList();
             if(prod != null)
         {
-            AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.Name = newname);
-            AppContext.SaveChanges();
+                AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.Name = newName);
+                AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.DateOut = dateOut);
+                AppContext.SaveChanges();
                 return _mapper.Map<ProductDto>(prod);
             }
             return null;
