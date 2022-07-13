@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.ProductRequests;
 using BreakevenStoneApi.Controllers.Responses;
+using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 
 namespace BreakevenStoneApi.Mappers
@@ -12,6 +13,9 @@ namespace BreakevenStoneApi.Mappers
             ProductRequestToDto();
             UpdateRequestToDto();
             DtoToGetResponse();
+            ProductToDto();
+            DtoToGetResponseReverse();
+            ProductToDtoReverse();
         }
 
         private void ProductRequestToDto()
@@ -29,6 +33,24 @@ namespace BreakevenStoneApi.Mappers
         private void DtoToGetResponse()
         {
             CreateMap<UserDto, GetProductResponse>()
+                .ReverseMap();
+        }
+
+        private void DtoToGetResponseReverse()
+        {
+            CreateMap<GetProductResponse, ProductDto>()
+                .ReverseMap();
+        }
+
+        private void ProductToDto()
+        {
+            CreateMap<Product, ProductDto>()
+                .ReverseMap();
+        }
+
+        private void ProductToDtoReverse()
+        {
+            CreateMap<ProductDto, Product>()
                 .ReverseMap();
         }
     }

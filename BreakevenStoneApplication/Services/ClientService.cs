@@ -58,7 +58,7 @@ namespace BreakevenStoneApplication.Services
             var user = AppContext.User.Where(p => p.CPF == userD.CPF).ToList();
             if (user.Count > 0)
             {
-                AppContext.User.Where(p => p.CPF == userD.CPF).ToList().ForEach(p => p.UserFirstName = userD.FirstName.ToLower());
+                AppContext.User.Where(p => p.CPF == userD.CPF).ToList().ForEach(p => p.UserFirstName = userD.FirstName);
             AppContext.SaveChanges();
                 return _mapper.Map<UserDto>(user.First());
             }

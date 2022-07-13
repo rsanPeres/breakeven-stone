@@ -13,7 +13,7 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators.UserValidators
                 .NotEmpty();
             */
             
-            RuleFor(p => p.Name)
+            RuleFor(p => p.FirstName)
                 .NotEmpty()
                 .NotNull();
         }

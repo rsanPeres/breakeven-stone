@@ -24,7 +24,7 @@ namespace BreakevenStoneApplication.Services
         {
             Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary, 
                 employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName, 
-                employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address);
+                employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address, employeeAdd.Email);
             if (employee != null) { 
                 AppContext.Database.EnsureCreated();
                 AppContext.Employee.Add(employee);

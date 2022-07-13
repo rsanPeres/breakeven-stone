@@ -10,6 +10,7 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators.UserValidators
         {
             RuleFor(p => p.CPF)
                 .NotNull()
+                //.IsValidCPF()
                 .MaximumLength(11)
                 .MinimumLength(11)
                 .NotEmpty();

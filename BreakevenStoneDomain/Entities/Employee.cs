@@ -10,7 +10,7 @@ namespace BreakevenStoneDomain.Entities
         
 
         public Employee() { }
-        public Employee(string fuction, decimal salary, string password, string userFirstName, string userLastName, string cPF, DateTime birthday, string address)
+        public Employee(string fuction, decimal salary, string password, string userFirstName, string userLastName, string cPF, DateTime birthday, string address, string email)
         {
             EmployeeId = Guid.NewGuid();
             Fuction = fuction;
@@ -23,6 +23,7 @@ namespace BreakevenStoneDomain.Entities
             Created = DateTime.Now;
             Birthday = birthday;
             Address = address;
+            Email = email;
         }
     }
 }

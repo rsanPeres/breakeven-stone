@@ -16,5 +16,6 @@ namespace BreakevenStoneDomain.Entities.Dtos
         public string CPF { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
+        public string Email { get; set; }
     }
 }
