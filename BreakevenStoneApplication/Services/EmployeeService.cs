@@ -1,15 +1,14 @@
-﻿using BreakevenStoneDomain.Entities;
-using BreakevenStoneInfra;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AutoMapper;
+using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
-using AutoMapper;
+using BreakevenStoneInfra;
+using BreakevenStoneRepository.Repositories;
 
 namespace BreakevenStoneApplication.Services
 {
     public class EmployeeService
     {
-        public List<Employee> Employee { get; set; }
+        EmployeeRepository _repository;
         public ApplicationContext AppContext { get; set; }
         private IMapper _mapper;
 
@@ -22,13 +21,12 @@ namespace BreakevenStoneApplication.Services
 
         public EmployeeDto EmployeeAdd(EmployeeDto employeeAdd)
         {
-            Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary, 
-                employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName, 
+            Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary,
+                employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName,
                 employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address, employeeAdd.Email);
-            if (employee != null) { 
-                AppContext.Database.EnsureCreated();
-                AppContext.Employee.Add(employee);
-                AppContext.SaveChanges();
+            if (employee != null)
+            {
+                _repository.Create(employee);
                 return _mapper.Map<EmployeeDto>(employee);
             }
             return null;
@@ -36,50 +34,33 @@ namespace BreakevenStoneApplication.Services
 
         public EmployeeDto EmployeeGetByName(string employeeFind)
         {
-            AppContext.Database.EnsureCreated();
-            var userf = AppContext.Employee
-                       .Where(us => us.UserFirstName == employeeFind.ToLower())
-                       .FirstOrDefault<Employee>();
-            if (userf == null)
-            {
-                return null;
-            }
-            return _mapper.Map<EmployeeDto>(userf);
-
+            var userf = _repository.Get(employeeFind);
+            if (userf != null)
+                return _mapper.Map<EmployeeDto>(userf);
+            return null;
         }
 
         public EmployeeDto EmployeeFindByCPF(string emplCPF)
         {
-            AppContext.Database.EnsureCreated();
-            var employeef = AppContext.Employee
-                       .Where(em => em.CPF == emplCPF)
-                       .FirstOrDefault<Employee>();
-            if(employeef == null) return null;
-            return _mapper.Map<EmployeeDto>(employeef);
+            var employeeFind = _repository.GetByCpf(emplCPF);
+            if (employeeFind == null) return null;
+            return _mapper.Map<EmployeeDto>(employeeFind);
 
         }
 
         public EmployeeDto EmployeeUpdate(string cpf, string function)
         {
-            var emplRet = AppContext.Employee.Where(p => p.CPF == cpf).ToList();
-            if(emplRet.Count() > 0)
-            {
-                AppContext.Employee.Where(p => p.CPF == cpf).ToList().ForEach(p => p.Fuction = function);
-                AppContext.SaveChanges();
-                return _mapper.Map<EmployeeDto>(emplRet);
-            }
+            var upEmployee = _repository.Update(cpf, function);
+            if (upEmployee != null)
+                return _mapper.Map<EmployeeDto>(upEmployee);
             return null;
         }
 
         public EmployeeDto EmployeeDelbyCpf(string EmployeeDel)
         {
-            var listRemove = AppContext.Employee.First(p => p.CPF == EmployeeDel);
-            if(listRemove != null)
-            {
-                AppContext.Employee.Remove(listRemove);
-                AppContext.SaveChanges();
-                return _mapper.Map<EmployeeDto>(listRemove);
-            }
+            var del = _repository.Delete(EmployeeDel);
+            if (del != null)
+                return _mapper.Map<EmployeeDto>(del);
             return null;
         }
     }

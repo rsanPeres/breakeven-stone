@@ -1,5 +1,6 @@
 using BreakevenStoneApplication.Services;
 using BreakevenStoneInfra;
+using BreakevenStoneRepository.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,10 @@ namespace BreakevenStoneApi
             services.AddScoped<EmployeeService, EmployeeService>();
             services.AddScoped<ProductService, ProductService>();
             services.AddScoped<EquipmentService, EquipmentService>();
+            services.AddScoped<ClientRepository, ClientRepository>();
+            services.AddScoped<EmployeeRepository, EmployeeRepository>();
+            services.AddScoped<ProductRepository, ProductRepository>();
+            services.AddScoped<EquipmentRepository, EquipmentRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BreakevenStoneApi", Version = "v1" });

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
-using BreakevenStoneInfra;
+using BreakevenStoneRepository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +10,11 @@ namespace BreakevenStoneApplication.Services
 {
     public class EquipmentService
     {
-        public List<Equipment> Equipments { get; set; }
-        public ApplicationContext AppContext { get; set; }
+        public EquipmentRepository _repository;
         private IMapper _mapper;
-        public EquipmentService(IMapper mapper, ApplicationContext context)
+        public EquipmentService(IMapper mapper, EquipmentRepository repository)
         {
-            AppContext = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
@@ -24,48 +23,35 @@ namespace BreakevenStoneApplication.Services
             Equipment equip = new Equipment(equipAdd.Name, equipAdd.Description, equipAdd.Price);
             if (equip != null)
             {
-            AppContext.Database.EnsureCreated();
-            AppContext.Equipment.Add(equip);
-            AppContext.SaveChanges();
+                _repository.Create(equip);
                 return _mapper.Map<EquipmentDto>(equip);
-        }
+            }
             return null;
         }
 
         public EquipmentDto EquipmentGetByName(string equip)
         {
-            AppContext.Database.EnsureCreated();
-            var equipf = AppContext.Equipment
-                       .Where(pr => pr.Name == equip).FirstOrDefault<Equipment>();
-            if(equipf != null) 
+            var equipf = _repository.Get(equip);
+            if (equipf != null)
                 return _mapper.Map<EquipmentDto>(equipf);
-            
             return null;
-            
+
         }
 
         public EquipmentDto EquipmentUpdate(string upName, string newName)
         {
-            var up = AppContext.Equipment.Where(p => p.Name == upName).FirstOrDefault<Equipment>();
+            var up = _repository.Update(upName, newName);
             if (up != null)
-        {
-                AppContext.Equipment.Where(p => p.Name == upName).ToList().ForEach(p => p.Name = newName);
-                AppContext.SaveChanges();
                 return _mapper.Map<EquipmentDto>(up);
-            }
             return null;
-            
+
         }
 
         public EquipmentDto Delete(string name)
         {
-            var listRemove = AppContext.Equipment.Where(p => p.Name == name).FirstOrDefault<Equipment>();
-            if (listRemove != null)
-            {
-                AppContext.Equipment.Remove(listRemove);
-                AppContext.SaveChanges();
-                return _mapper.Map<EquipmentDto>(listRemove);
-            }
+            var equip = _repository.Delete(name);
+            if(equip != null)
+            return _mapper.Map<EquipmentDto>(equip);
             return null;
         }
     }

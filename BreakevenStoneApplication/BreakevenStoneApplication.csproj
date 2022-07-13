@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\BreakevenStoneDomain\BreakevenStoneDomain.csproj" />
       <ProjectReference Include="..\BreakevenStoneInfra\BreakevenStoneInfra.csproj" />
+      <ProjectReference Include="..\BreakevenStoneRepository\BreakevenStoneRepository.csproj" />
     </ItemGroup>
 
 </Project>

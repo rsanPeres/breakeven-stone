@@ -109,7 +109,7 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var prod = _service.ProductUpdate(request.Name, request.NewName, request.DateOut);
+                var prod = _service.ProductUpdate(request.Name, request.Status);
                 var ret = _mapper.Map<GetProductResponse>(prod);
                 var response = new ApiResponse<GetProductResponse>()
                 {

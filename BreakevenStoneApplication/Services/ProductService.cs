@@ -37,7 +37,7 @@ namespace BreakevenStoneApplication.Services
             return null;
         }
 
-        public ProductDto ProductUpdate(string name, string newStatus, DateTime dateOut)
+        public ProductDto ProductUpdate(string name, string newStatus)
         {
             var prod = _repository.Update(name, newStatus);
             if (prod != null)

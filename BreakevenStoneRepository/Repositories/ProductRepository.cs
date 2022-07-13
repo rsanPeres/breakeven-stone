@@ -6,7 +6,12 @@ namespace BreakevenStoneRepository.Repositories
 {
     public class ProductRepository
     {
-        public ApplicationContext AppContext { get; set; }
+        public ApplicationContext AppContext;
+
+        public ProductRepository(ApplicationContext appContext)
+        {
+            AppContext = appContext;
+        }
 
         public void Create(Product productAdd)
         {

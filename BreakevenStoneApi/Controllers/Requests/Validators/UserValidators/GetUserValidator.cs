@@ -7,8 +7,8 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators.UserValidators
     {
         public GetUserValidator()
         {
-            RuleFor(p => p.FirstName)
-                .MinimumLength(2)
+            RuleFor(p => p.Cpf)
+                //.IsValidCPF()
                 .NotNull()
                 .NotEmpty();
 

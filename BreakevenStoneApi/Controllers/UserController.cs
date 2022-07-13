@@ -35,7 +35,8 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var user = _service.ClientGetByName(userRequest.FirstName);
+                UserDto userDto = _mapper.Map<UserDto>(userRequest);
+                var user = _service.ClientGetByCpf(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
                 var response = new ApiResponse<GetUserResponse>()
                 {
