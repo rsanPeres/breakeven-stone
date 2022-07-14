@@ -2,7 +2,6 @@
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneRepository.Repositories;
-using System;
 
 namespace BreakevenStoneApplication.Services
 {
@@ -21,7 +20,7 @@ namespace BreakevenStoneApplication.Services
         public ProductDto ProductAdd(ProductDto prodAdd)
         {
             Product productAdd = new Product(prodAdd.Status, prodAdd.Name, prodAdd.Price);
-            if (productAdd != null)
+            if (productAdd.IsValid)
             {
                 _repository.Create(productAdd);
                 return _mapper.Map<ProductDto>(productAdd);

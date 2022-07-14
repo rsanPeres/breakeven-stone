@@ -21,11 +21,13 @@ namespace BreakevenStoneApplication.Services
         public EquipmentDto EquipmentAdd(EquipmentDto equipAdd)
         {
             Equipment equip = new Equipment(equipAdd.Name, equipAdd.Description, equipAdd.Price);
-            if (equip != null)
+            if (equip.IsValid)
             {
                 _repository.Create(equip);
                 return _mapper.Map<EquipmentDto>(equip);
             }
+            foreach (var notification in equip.Notifications)
+                Console.WriteLine($"{notification.Key} : {notification.Message}");
             return null;
         }
 

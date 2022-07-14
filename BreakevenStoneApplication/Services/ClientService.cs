@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneRepository.Repositories;
@@ -19,9 +20,11 @@ namespace BreakevenStoneApplication.Services
         public UserDto ClientAdd(UserDto clientDto)
         {
             var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, clientDto.Address, clientDto.Email);
-            if (user != null)
+            if (user.IsValid)
                 return _mapper.Map<UserDto>(user);
 
+            foreach (var notification in user.Notifications)
+                Console.WriteLine($"{notification.Key} : {notification.Message}");    
             return null;
         }
 
@@ -34,7 +37,7 @@ namespace BreakevenStoneApplication.Services
 
         public UserDto ClientUpdate(UserDto userD)
         {
-            var user = _repository.Update(userD.FirstName, userD.CPF);
+            var user = _repository.Update(userD.Address, userD.CPF);
             if (user != null)
                 return _mapper.Map<UserDto>(user);
 

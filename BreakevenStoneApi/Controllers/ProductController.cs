@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.ProductRequests;
 using BreakevenStoneApi.Controllers.Requests.Validators.ProductValidators;
-using BreakevenStoneApi.Controllers.Requests.Validators.UserValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Entities.Dtos;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -44,7 +42,7 @@ namespace BreakevenStoneApi.Controllers
                     Success = true,
                     Data = ret,
                     Messages = null
-            };
+                };
                 return Ok(response);
             }
             catch (Exception e)

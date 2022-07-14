@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneInfra;
@@ -24,11 +25,13 @@ namespace BreakevenStoneApplication.Services
             Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary,
                 employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName,
                 employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address, employeeAdd.Email);
-            if (employee != null)
+            if (employee.IsValid)
             {
                 _repository.Create(employee);
                 return _mapper.Map<EmployeeDto>(employee);
             }
+            foreach (var notification in employee.Notifications)
+                Console.WriteLine($"{notification.Key} : {notification.Message}");
             return null;
         }
 

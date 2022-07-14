@@ -4,16 +4,13 @@ namespace BreakevenStoneDomain.Entities
 {
     public class Employee : User
     {
-        public Guid EmployeeId { get; set; }
-        public string Fuction { get; set; }
-        public decimal Salary { get; set; }
-        
-
-        public Employee() { }
-        public Employee(string fuction, decimal salary, string password, string userFirstName, string userLastName, string cPF, DateTime birthday, string address, string email)
+        public Employee(string function, decimal salary, string password, string userFirstName, string userLastName, string cPF, DateTime birthday, string address, string email) : base(password, userFirstName, userLastName, cPF, birthday, address, email)
         {
+
             EmployeeId = Guid.NewGuid();
-            Fuction = fuction;
+            if (string.IsNullOrEmpty(function))
+                AddNotification("Function", "Invalid function");
+            Fuction = function;
             Salary = salary;
             Id = Guid.NewGuid();
             Password = password;
@@ -24,6 +21,14 @@ namespace BreakevenStoneDomain.Entities
             Birthday = birthday;
             Address = address;
             Email = email;
+
         }
+
+        public Guid EmployeeId { get; protected set; }
+        public string Fuction { get; set; }
+        public decimal Salary { get; protected set; }
+
+
+
     }
 }

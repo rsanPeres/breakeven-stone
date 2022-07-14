@@ -66,11 +66,11 @@ namespace BreakevenStoneApi.Controllers
                 CreateUserValidator validator = new CreateUserValidator();
 
                 var result = validator.Validate(userRequest);
-                if(result.IsValid == false)
+                if (result.IsValid == false)
                 {
                     throw new Exception(result.ToString());
                 }
-                
+
                 var userDto = _mapper.Map<UserDto>(userRequest);
                 var user = _service.ClientAdd(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);

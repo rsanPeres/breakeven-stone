@@ -48,7 +48,7 @@ namespace BreakevenStoneApi.Controllers
             catch (Exception e)
             {
                 var response = new ApiResponse<string>()
-        {
+                {
                     Success = false,
                     Data = null,
                     Messages = e.Message
@@ -60,7 +60,8 @@ namespace BreakevenStoneApi.Controllers
         [HttpPost]
         public IActionResult EquipmentCreate(CreateEquipmentRequest request)
         {
-            try {
+            try
+            {
                 CreateEquipmentValidator validator = new CreateEquipmentValidator();
 
                 var result = validator.Validate(request);
@@ -161,6 +162,6 @@ namespace BreakevenStoneApi.Controllers
                 return BadRequest(response);
             }
         }
-    
+
     }
 }
