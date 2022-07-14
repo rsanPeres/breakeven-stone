@@ -29,12 +29,12 @@ namespace BreakevenStoneRepository.Repositories
             return equipf;
         }
 
-        public Equipment Update(string name, string newName)
+        public Equipment Update(string name, string description)
         {
             var up = AppContext.Equipment.Where(p => p.Name == name).FirstOrDefault<Equipment>();
             if (up != null)
             {
-                AppContext.Equipment.Where(p => p.Name == name).ToList().ForEach(p => p.Name = newName);
+                AppContext.Equipment.Where(p => p.Name == name).ToList().ForEach(p => p.Description = description);
                 AppContext.SaveChanges();
                 return up;
             }

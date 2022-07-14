@@ -14,10 +14,10 @@ namespace BreakevenStoneApplication.Services
         private IMapper _mapper;
 
 
-        public EmployeeService(IMapper mapper, ApplicationContext context)
+        public EmployeeService(IMapper mapper, EmployeeRepository repository)
         {
-            AppContext = context;
             _mapper = mapper;
+            _repository = repository;
         }
 
         public EmployeeDto EmployeeAdd(EmployeeDto employeeAdd)

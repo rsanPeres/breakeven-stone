@@ -106,7 +106,7 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var equip = _service.EquipmentUpdate(request.Name, request.NewName);
+                var equip = _service.EquipmentUpdate(request.Description, request.NewDescription);
                 var ret = _mapper.Map<GetEquipmentResponse>(equip);
                 var response = new ApiResponse<GetEquipmentResponse>()
                 {

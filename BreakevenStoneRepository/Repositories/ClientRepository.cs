@@ -29,12 +29,12 @@ namespace BreakevenStoneRepository.Repositories
             return userf;
         }
 
-        public User Update(string name, string cpf)
+        public User Update(string address, string cpf)
         {
             var user = AppContext.User.First(p => p.CPF == cpf);
             if (user != null)
             {
-                AppContext.User.Where(p => p.CPF == cpf).ToList().ForEach(p => p.UserFirstName = name);
+                AppContext.User.Where(p => p.CPF == cpf).ToList().ForEach(p => p.Address = address);
                 AppContext.SaveChanges();
                 return user;
             }

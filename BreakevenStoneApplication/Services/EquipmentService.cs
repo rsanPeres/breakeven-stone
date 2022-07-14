@@ -3,8 +3,6 @@ using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 using BreakevenStoneRepository.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BreakevenStoneApplication.Services
 {
@@ -40,9 +38,9 @@ namespace BreakevenStoneApplication.Services
 
         }
 
-        public EquipmentDto EquipmentUpdate(string upName, string newName)
+        public EquipmentDto EquipmentUpdate(string upDescription, string newDescription)
         {
-            var up = _repository.Update(upName, newName);
+            var up = _repository.Update(upDescription, newDescription);
             if (up != null)
                 return _mapper.Map<EquipmentDto>(up);
             return null;
@@ -52,8 +50,8 @@ namespace BreakevenStoneApplication.Services
         public EquipmentDto Delete(string name)
         {
             var equip = _repository.Delete(name);
-            if(equip != null)
-            return _mapper.Map<EquipmentDto>(equip);
+            if (equip != null)
+                return _mapper.Map<EquipmentDto>(equip);
             return null;
         }
     }
