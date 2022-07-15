@@ -3,11 +3,12 @@ using AutoMapper;
 using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
+using BreakevenStoneDomain.Interfaces;
 using BreakevenStoneRepository.Repositories;
 
 namespace BreakevenStoneApplication.Services
 {
-    public class ClientService
+    public class ClientService : IUserRepository
     {
         private ClientRepository _repository;
         private IMapper _mapper;
@@ -18,7 +19,7 @@ namespace BreakevenStoneApplication.Services
             _repository = repository;
         }
 
-        public UserDto ClientAdd(CreateUserCommand clientDto)
+        public UserDto Create(CreateUserCommand clientDto)
         {
             var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, string.Empty, clientDto.Email);
             if (user.IsValid)
@@ -29,14 +30,14 @@ namespace BreakevenStoneApplication.Services
             return null;
         }
 
-        public UserDto ClientGetByCpf(UserDto cliCPF)
+        public UserDto Get(UserDto cliCPF)
         {
             var userf = _repository.Get(cliCPF.CPF);
             if (userf != null) return _mapper.Map<UserDto>(userf);
             return null;
         }
 
-        public UserDto ClientUpdate(UserDto userD)
+        public UserDto Update(UserDto userD)
         {
             var user = _repository.Update(userD.Address, userD.CPF);
             if (user != null)
@@ -45,7 +46,7 @@ namespace BreakevenStoneApplication.Services
             return null;
         }
 
-        public UserDto ClientDelbyCpf(UserDto userD)
+        public UserDto Delete(UserDto userD)
         {
             var userRemove = _repository.Delete(userD.CPF);
             if (userRemove != null) return _mapper.Map<UserDto>(userRemove);
