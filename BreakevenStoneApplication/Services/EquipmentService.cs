@@ -8,7 +8,7 @@ namespace BreakevenStoneApplication.Services
 {
     public class EquipmentService
     {
-        public EquipmentRepository _repository;
+        private EquipmentRepository _repository;
         private IMapper _mapper;
         public EquipmentService(IMapper mapper, EquipmentRepository repository)
         {

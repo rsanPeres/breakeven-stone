@@ -1,16 +1,14 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
-using BreakevenStoneInfra;
 using BreakevenStoneRepository.Repositories;
+using System;
 
 namespace BreakevenStoneApplication.Services
 {
     public class EmployeeService
     {
-        EmployeeRepository _repository;
-        public ApplicationContext AppContext { get; set; }
+        private EmployeeRepository _repository;
         private IMapper _mapper;
 
 

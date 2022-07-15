@@ -7,9 +7,9 @@ namespace BreakevenStoneApplication.Services
 {
     public class ProductService
     {
-        public ProductRepository _repository;
+        private ProductRepository _repository;
 
-        public IMapper _mapper;
+        private IMapper _mapper;
 
         public ProductService(IMapper mapper, ProductRepository repository)
         {
