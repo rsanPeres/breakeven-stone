@@ -3,9 +3,13 @@ using BreakevenStoneApi.Controllers.Requests.UserRequests;
 using BreakevenStoneApi.Controllers.Requests.Validators.UserValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
+using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneApi.Controllers
 {
@@ -13,12 +17,15 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/user")]
     public class UserController : Controller
     {
+        private readonly IMediator _mediator;
+
         private readonly IMapper _mapper;
         private ClientService _service { get; set; }
-        public UserController(ClientService service, IMapper mapper)
+        public UserController(ClientService service, IMapper mapper, IMediator mediator)
         {
             _service = service;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         // GET: Client
@@ -35,9 +42,15 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
+
+
+                
                 UserDto userDto = _mapper.Map<UserDto>(userRequest);
                 var user = _service.ClientGetByCpf(userDto);
+                
                 var ret = _mapper.Map<GetUserResponse>(user);
+                
+    
                 var response = new ApiResponse<GetUserResponse>()
                 {
                     Success = true,
@@ -59,7 +72,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserCreate(UserRequest userRequest)
+        public async Task<IActionResult> UserCreate(UserRequest userRequest)
         {
             try
             {
@@ -71,9 +84,14 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientAdd(userDto);
-                var ret = _mapper.Map<GetUserResponse>(user);
+                var request = _mapper.Map<CreateUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+
+                //var userDto = _mapper.Map<UserDto>(userRequest);
+                //var user = _service.ClientAdd(userDto);
+                /*var ret = _mapper.Map<GetUserResponse>(rett);
 
                 var response = new ApiResponse<GetUserResponse>()
                 {
@@ -81,7 +99,7 @@ namespace BreakevenStoneApi.Controllers
                     Data = ret,
                     Messages = null
                 };
-                return Ok(response);
+                return Ok(response);*/
             }
             catch (Exception e)
             {
