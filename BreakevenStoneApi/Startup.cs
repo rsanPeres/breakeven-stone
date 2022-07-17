@@ -1,4 +1,5 @@
 using BreakevenStoneApplication.Services;
+using BreakevenStoneDomain.Interfaces;
 using BreakevenStoneInfra;
 using BreakevenStoneRepository.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +37,8 @@ namespace BreakevenStoneApi
             services.AddScoped<EmployeeRepository, EmployeeRepository>();
             services.AddScoped<ProductRepository, ProductRepository>();
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            AddMediatr(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BreakevenStoneApi", Version = "v1" });

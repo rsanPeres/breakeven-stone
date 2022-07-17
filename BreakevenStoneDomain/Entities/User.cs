@@ -41,7 +41,7 @@ namespace BreakevenStoneDomain.Entities
             {
                 AddNotification("Email", "Invalid email");
             }
-            Email = email;
+                Email = email;
 
         }
 
