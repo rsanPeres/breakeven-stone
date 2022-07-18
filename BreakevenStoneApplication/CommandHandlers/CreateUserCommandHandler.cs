@@ -10,14 +10,20 @@ using BreakevenStoneApplication.Services;
 
 namespace BreakevenStoneApplication.CommandHandlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Response>
     {
         private ClientService _service;
-        public Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+
+        public CreateUserCommandHandler(ClientService service)
         {
-            _service.ClientAdd(request);
+            _service = service;
+        }
+
+        public async Task<Response> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            await _service.Create(request);
             //chamar o eventbus
-            return Unit.Task;
+            return new Response("Success");
         }
     }
 }

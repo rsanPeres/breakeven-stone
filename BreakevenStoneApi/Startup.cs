@@ -2,6 +2,9 @@ using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Interfaces;
 using BreakevenStoneInfra;
 using BreakevenStoneRepository.Repositories;
+using DemoMediatR.Application.Core;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,8 +40,8 @@ namespace BreakevenStoneApi
             services.AddScoped<EmployeeRepository, EmployeeRepository>();
             services.AddScoped<ProductRepository, ProductRepository>();
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            AddMediatr(services);
+            services.AddScoped<IUserRepository, ClientService>();
+            AddApplicationServices(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BreakevenStoneApi", Version = "v1" });
@@ -62,6 +65,26 @@ namespace BreakevenStoneApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private static void AddApplicationServices(IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, ClientService>();
+            AddMediatr(services);
+        }
+
+        private static void AddMediatr(IServiceCollection services)
+        {
+            const string applicationAssemblyName = "DemoMediatR.Application";
+            var assembly = AppDomain.CurrentDomain.Load(applicationAssemblyName);
+
+            AssemblyScanner
+                .FindValidatorsInAssembly(assembly)
+                .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
+
+            
         }
     }
 }

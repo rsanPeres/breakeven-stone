@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
@@ -19,37 +20,37 @@ namespace BreakevenStoneApplication.Services
             _repository = repository;
         }
 
-        public UserDto Create(CreateUserCommand clientDto)
+        public Task Create(CreateUserCommand clientDto)
         {
             var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, string.Empty, clientDto.Email);
             if (user.IsValid)
-                return _mapper.Map<UserDto>(user);
+                return Task.CompletedTask;
 
             foreach (var notification in user.Notifications)
                 Console.WriteLine($"{notification.Key} : {notification.Message}");    
             return null;
         }
 
-        public UserDto Get(UserDto cliCPF)
+        public Task Get(UserDto cliCPF)
         {
             var userf = _repository.Get(cliCPF.CPF);
-            if (userf != null) return _mapper.Map<UserDto>(userf);
+            if (userf != null) return Task.CompletedTask;
             return null;
         }
 
-        public UserDto Update(UserDto userD)
+        public Task Update(UserDto userD)
         {
             var user = _repository.Update(userD.Address, userD.CPF);
             if (user != null)
-                return _mapper.Map<UserDto>(user);
+                return Task.CompletedTask;
 
             return null;
         }
 
-        public UserDto Delete(UserDto userD)
+        public Task Delete(UserDto userD)
         {
             var userRemove = _repository.Delete(userD.CPF);
-            if (userRemove != null) return _mapper.Map<UserDto>(userRemove);
+            if (userRemove != null) return Task.CompletedTask;
             return null;
         }
     }

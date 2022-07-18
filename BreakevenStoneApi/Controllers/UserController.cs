@@ -30,7 +30,7 @@ namespace BreakevenStoneApi.Controllers
 
         // GET: Client
         [HttpGet]
-        public IActionResult UserGetByName(GetUserRequest userRequest)
+        public async Task<IActionResult> GetUser(GetUserRequest userRequest)
         {
             try
             {
@@ -46,18 +46,15 @@ namespace BreakevenStoneApi.Controllers
 
                 
                 UserDto userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientGetByCpf(userDto);
+                var user = _service.Get(userDto);
                 
                 var ret = _mapper.Map<GetUserResponse>(user);
-                
-    
-                var response = new ApiResponse<GetUserResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+
+
+                var request = _mapper.Map<CreateUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -72,7 +69,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserCreate(UserRequest userRequest)
+        public async Task<IActionResult> CreateUser(UserRequest userRequest)
         {
             try
             {
@@ -114,7 +111,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Update(UpdateUserRequest userRequest)
+        public async Task<IActionResult> UpdateUser(UpdateUserRequest userRequest)
         {
             try
             {
@@ -127,18 +124,17 @@ namespace BreakevenStoneApi.Controllers
                 }
 
                 var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientUpdate(userDto);
+                var user = _service.Update(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
 
-                var response = new ApiResponse<GetUserResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var request = _mapper.Map<CreateUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+
+           
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 var response = new ApiResponse<string>()
                 {
@@ -148,12 +144,14 @@ namespace BreakevenStoneApi.Controllers
                 };
                 return BadRequest(response);
             }
+
+                
         }
 
 
 
         [HttpDelete]
-        public IActionResult Delete(DeleteUserRequest userRequest)
+        public async Task<IActionResult> Delete(DeleteUserRequest userRequest)
         {
             try
             {
@@ -166,16 +164,21 @@ namespace BreakevenStoneApi.Controllers
                 }
 
                 var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientDelbyCpf(userDto);
+                var user = _service.Delete(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
 
-                var response = new ApiResponse<GetUserResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var request = _mapper.Map<CreateUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+
+                //    var response = new ApiResponse<GetUserResponse>()
+                //    {
+                //        Success = true,
+                //        Data = ret,
+                //        Messages = null
+                //    };
+                //    return Ok(response.Messages);
             }
             catch (Exception e)
             {
@@ -186,7 +189,17 @@ namespace BreakevenStoneApi.Controllers
                     Messages = e.Message
                 };
                 return BadRequest(response);
+
             }
+            //{
+            //    var response = new ApiResponse<string>()
+            //    {
+            //        Success = false,
+            //        Data = null,
+            //        Messages = e.Message
+            //    };
+            //    return BadRequest(response);
+            //}
         }
     }
 }
