@@ -12,7 +12,7 @@ namespace BreakevenStoneDomain.Interfaces
     public interface IUserRepository
     {
         Task Create(CreateUserCommand user);
-        Task Get(UserDto user);
+        public UserDto Get(UserDto user);
         Task Update(UserDto user);
         Task Delete(UserDto user);
     }

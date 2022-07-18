@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Reflection;
 
 namespace BreakevenStoneApi
 {
@@ -75,16 +76,15 @@ namespace BreakevenStoneApi
 
         private static void AddMediatr(IServiceCollection services)
         {
-            const string applicationAssemblyName = "DemoMediatR.Application";
-            var assembly = AppDomain.CurrentDomain.Load(applicationAssemblyName);
+            var applicationAssemblyName = Assembly.Load("BreakevenStoneApplication");
 
             AssemblyScanner
-                .FindValidatorsInAssembly(assembly)
+                .FindValidatorsInAssembly(applicationAssemblyName)
                 .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
 
-            
+            services.AddMediatR(applicationAssemblyName);
         }
     }
 }

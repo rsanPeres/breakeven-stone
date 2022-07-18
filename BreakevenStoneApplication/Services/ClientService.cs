@@ -22,7 +22,7 @@ namespace BreakevenStoneApplication.Services
 
         public Task Create(CreateUserCommand clientDto)
         {
-            var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.CPF, clientDto.Birthday, string.Empty, clientDto.Email);
+            var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.Cpf, clientDto.Birthday, string.Empty, clientDto.Email);
             if (user.IsValid)
                 return Task.CompletedTask;
 
@@ -31,10 +31,10 @@ namespace BreakevenStoneApplication.Services
             return null;
         }
 
-        public Task Get(UserDto cliCPF)
+        public UserDto Get(UserDto cliCPF)
         {
             var userf = _repository.Get(cliCPF.CPF);
-            if (userf != null) return Task.CompletedTask;
+            if (userf != null) return _mapper.Map<UserDto>(userf);
             return null;
         }
 

@@ -9,19 +9,22 @@ namespace BreakevenStoneDomain.Commands
 {
     public class CreateUserCommand : IRequest<Response>
     {
-        public string Password { get; protected set; }
-        public string FirstName { get; protected set; }
-        public string LastName { get; protected set; }
-        public string CPF { get; protected set; }
-        public DateTime Birthday { get; protected set; }
-        public string Email { get; protected set; }
+        public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Cpf { get; set; }
+        public DateTime Birthday { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+
+        public CreateUserCommand() { }
 
         public CreateUserCommand(string password, string userFirstName, string userLastName, string cPF, DateTime birthday, string email)
         {
             Password = password;
             FirstName = userFirstName;
             LastName = userLastName;
-            CPF = cPF;
+            Cpf = cPF;
             Birthday = birthday;
             Email = email;
         }
