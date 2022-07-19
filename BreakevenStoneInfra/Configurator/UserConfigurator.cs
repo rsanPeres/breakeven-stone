@@ -35,6 +35,9 @@ namespace BreakevenStoneInfra.Configurator
                 .Property(p => p.Address).HasColumnName("Address").HasColumnType("varchar(200)");
             builder
                 .Property(p => p.Email).HasColumnName("Email").IsRequired();
+            
+            builder.Ignore(x => x.Notifications);
+            builder.Ignore(x => x.IsValid);
         }
     }
 }
