@@ -33,6 +33,8 @@ namespace BreakevenStoneInfra
                 .Property(p => p.Price).HasColumnName("Price_Product")
                 .HasColumnType("float");
 
+            builder.Ignore(x => x.Notifications);
+            builder.Ignore(x => x.IsValid);
         }
     }
 }

@@ -28,6 +28,9 @@ namespace BreakevenStoneInfra.Configurator
                 .HasColumnType("varchar(100)");
             builder
                 .Property(p => p.Price).HasColumnName("Price").HasColumnType("float");
+
+            builder.Ignore(x => x.Notifications);
+            builder.Ignore(x => x.IsValid);
         }
     }
 }

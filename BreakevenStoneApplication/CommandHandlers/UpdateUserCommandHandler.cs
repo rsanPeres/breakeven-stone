@@ -18,7 +18,7 @@ namespace BreakevenStoneApplication.CommandHandlers
 
         public async Task<Response> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            await _repository.Update(request.Address, request.Cpf);
+            await _repository.Update(request.FirstName, request.Cpf);
             return new Response("Success");
         }
     }

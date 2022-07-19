@@ -17,6 +17,9 @@ namespace BreakevenStoneInfra.Configurator
                 .HasColumnType("varchar(50)").IsRequired();
             builder
                 .Property(p => p.Salary).HasColumnName("Salary").HasColumnType("float");
+            
+            //builder.Ignore(x => x.Notifications);
+            //builder.Ignore(x => x.IsValid);
         }
     }
 }

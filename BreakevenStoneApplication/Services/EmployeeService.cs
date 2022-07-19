@@ -43,7 +43,7 @@ namespace BreakevenStoneApplication.Services
 
         public EmployeeDto EmployeeFindByCPF(string emplCPF)
         {
-            var employeeFind = _repository.GetByCpf(emplCPF);
+            var employeeFind = _repository.Get(emplCPF);
             if (employeeFind == null) return null;
             return _mapper.Map<EmployeeDto>(employeeFind);
 

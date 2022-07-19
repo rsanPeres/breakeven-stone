@@ -30,7 +30,7 @@ namespace BreakevenStoneApplication.Services
 
         public ProductDto ProductGetByName(string prod)
         {
-            var prodf = _repository.GetByName(prod);
+            var prodf = _repository.Get(prod);
             if (prodf != null)
                 return _mapper.Map<ProductDto>(prodf);
             return null;

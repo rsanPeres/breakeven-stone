@@ -44,8 +44,5 @@ namespace BreakevenStoneDomain.Entities
         public DateTime Birthday { get; protected set; }
         public string Address { get; set; }
         public string Email { get; protected set; }
-
-        
-
     }
 }
