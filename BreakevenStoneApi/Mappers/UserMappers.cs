@@ -21,6 +21,9 @@ namespace BreakevenStoneApi.Mappers
             DeleteUserRequestToUserDto();
             GetUserRequestToCreateUserCommand();
             CreateUserCommandToGetUserRequest();
+            UserRequestToCreateUserCommand();
+            UpdateUserRequestToUpUserCommand();
+            DeleteUserRequestTodelUserCommand();
         }
 
         private void RequestToUserDto()
@@ -86,6 +89,24 @@ namespace BreakevenStoneApi.Mappers
         private void CreateUserCommandToGetUserRequest()
         {
             CreateMap<CreateUserCommand, UserRequest>()
+                .ReverseMap();
+        }
+
+        private void UserRequestToCreateUserCommand()
+        {
+            CreateMap<UserRequest, CreateUserCommand>()
+                .ReverseMap();
+        }
+
+        private void UpdateUserRequestToUpUserCommand()
+        {
+            CreateMap<UpdateUserRequest, UpdateUserCommand>()
+                .ReverseMap();
+        }
+
+        private void DeleteUserRequestTodelUserCommand()
+        {
+            CreateMap<DeleteUserRequest, DeleteUserCommand>()
                 .ReverseMap();
         }
     }

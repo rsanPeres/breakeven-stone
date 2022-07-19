@@ -20,9 +20,9 @@ namespace BreakevenStoneApplication.Services
 
         public EmployeeDto EmployeeAdd(EmployeeDto employeeAdd)
         {
-            Employee employee = new Employee(employeeAdd.Fuction, employeeAdd.Salary,
-                employeeAdd.Password, employeeAdd.FirstName, employeeAdd.LastName,
-                employeeAdd.CPF, employeeAdd.Birthday, employeeAdd.Address, employeeAdd.Email);
+            Employee employee = new Employee(employeeAdd.Password, employeeAdd.FirstName,
+                employeeAdd.LastName, employeeAdd.CPF, employeeAdd.Birthday,employeeAdd.Address,
+                employeeAdd.Email, employeeAdd.Fuction, employeeAdd.Salary);
             if (employee.IsValid)
             {
                 _repository.Create(employee);

@@ -14,7 +14,7 @@ namespace BreakevenStoneDomain.Entities
 
         public Product(string status, string name, decimal price)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             DateIn = DateTime.Now;
             Status = status;
             if (string.IsNullOrEmpty(name))

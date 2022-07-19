@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.EquipmentRequest;
 using BreakevenStoneApi.Controllers.Responses;
+using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 
@@ -13,6 +14,8 @@ namespace BreakevenStoneApi.Mappers
             EquipmentToDto();
             RequestToDto();
             DtoToResponse();
+            CreatEquipmentToCreateEquipmentCommand();
+            UpdateEquipmentToUpEquipmentCommand();
         }
 
         private void EquipmentToDto()
@@ -30,6 +33,24 @@ namespace BreakevenStoneApi.Mappers
         private void DtoToResponse()
         {
             CreateMap<EquipmentDto, GetEquipmentResponse>()
+                .ReverseMap();
+        }
+
+        private void CreatEquipmentToCreateEquipmentCommand()
+        {
+            CreateMap<CreateEquipmentRequest, CreateEquipmentCommand>()
+                .ReverseMap();
+        }
+
+        private void UpdateEquipmentToUpEquipmentCommand()
+        {
+            CreateMap<UpdateEquipmentRequest, UpdateEquipmentCommand>()
+                .ReverseMap();
+        }
+
+        private void DeleteEquipmentToDelEquipmentCommand()
+        {
+            CreateMap<GetEquipmentRequest, DeleteEquipmentCommand>()
                 .ReverseMap();
         }
     }

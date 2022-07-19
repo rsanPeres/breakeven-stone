@@ -3,9 +3,12 @@ using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
 using BreakevenStoneApi.Controllers.Requests.Validators.EmployeeValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
-using BreakevenStoneDomain.Entities.Dtos;
+using BreakevenStoneDomain.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneApi.Controllers
 {
@@ -13,13 +16,15 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/employee")]
     public class EmployeeController : Controller
     {
-        private EmployeeService _service { get; set; }
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly EmployeeService _service;
 
-        public EmployeeController(EmployeeService service, IMapper mapper)
+        public EmployeeController(EmployeeService service, IMapper mapper, IMediator mediator)
         {
             _service = service;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -59,7 +64,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult EmployeeCreate(CreateEmployeeRequest employeeCreate)
+        public async Task<IActionResult> EmployeeCreate(CreateEmployeeRequest employeeCreate)
         {
             try
             {
@@ -71,16 +76,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var request = _mapper.Map<EmployeeDto>(employeeCreate);
-                var user = _service.EmployeeAdd(request);
-                var ret = _mapper.Map<GetEmployeeResponse>(user);
-                var response = new ApiResponse<GetEmployeeResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var request = _mapper.Map<CreateEmployeeCommand>(employeeCreate);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -95,7 +94,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Update(UpdateEmployeeRequest request)
+        public async Task<IActionResult> Update(UpdateEmployeeRequest request)
         {
             try
             {
@@ -107,15 +106,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var user = _service.EmployeeUpdate(request.Cpf, request.Function);
-                var ret = _mapper.Map<GetEmployeeResponse>(user);
-                var response = new ApiResponse<GetEmployeeResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<UpdateEmployeeCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -130,7 +124,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(GetEmployeeRequest request)
+        public async Task<IActionResult> Delete(GetEmployeeRequest request)
         {
             try
             {
@@ -141,16 +135,10 @@ namespace BreakevenStoneApi.Controllers
                 {
                     throw new Exception(result.ToString());
                 }
+                var reques = _mapper.Map<DeleteEmployeeCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
 
-                var user = _service.EmployeeDelbyCpf(request.Cpf);
-                var ret = _mapper.Map<GetEmployeeResponse>(user);
-                var response = new ApiResponse<GetEmployeeResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {

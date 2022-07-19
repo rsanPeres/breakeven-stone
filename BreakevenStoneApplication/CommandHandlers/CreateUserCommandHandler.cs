@@ -7,23 +7,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using BreakevenStoneDomain.Commands;
 using BreakevenStoneApplication.Services;
+using BreakevenStoneDomain.Entities;
+using BreakevenStoneRepository.Repositories;
 
 namespace BreakevenStoneApplication.CommandHandlers
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Response>
     {
-        private ClientService _service;
+        private ClientRepository _repository;
 
-        public CreateUserCommandHandler(ClientService service)
+        public CreateUserCommandHandler(ClientRepository repository)
         {
-            _service = service;
+            _repository = repository;
         }
 
         public async Task<Response> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            await _service.Create(request);
-            //chamar o eventbus
-            return new Response("Success");
+            var user = new User(request.Password, request.FirstName,
+                request.LastName, request.Cpf,
+                request.Birthday, "rua camargos", request.Email);
+            if (user.IsValid)
+            {
+                await _repository.Create(user);
+                return new Response("Success");
+            }
+            return new Response("Error");
         }
     }
 }

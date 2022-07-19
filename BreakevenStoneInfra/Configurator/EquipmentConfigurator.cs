@@ -13,6 +13,8 @@ namespace BreakevenStoneInfra.Configurator
             builder
                 .ToTable("Equipment");
             builder
+                .HasKey(x => x.Id);
+            builder
                 .Property(p => p.Id)
                 .HasColumnName("Id_Equipment");
             builder

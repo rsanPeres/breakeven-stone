@@ -3,9 +3,12 @@ using BreakevenStoneApi.Controllers.Requests.EquipmentRequest;
 using BreakevenStoneApi.Controllers.Requests.Validators.EquipmentValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
-using BreakevenStoneDomain.Entities.Dtos;
+using BreakevenStoneDomain.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneApi.Controllers
 {
@@ -13,13 +16,15 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/equipment")]
     public class EquipmentController : Controller
     {
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private EquipmentService _service { get; set; }
 
-        public EquipmentController(EquipmentService service, IMapper mapper)
+        public EquipmentController(EquipmentService service, IMapper mapper, IMediator mediator)
         {
             _service = service;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -58,7 +63,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult EquipmentCreate(CreateEquipmentRequest request)
+        public async Task<IActionResult> EquipmentCreate(CreateEquipmentRequest request)
         {
             try
             {
@@ -70,16 +75,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var dto = _mapper.Map<EquipmentDto>(request);
-                var equip = _service.EquipmentAdd(dto);
-                var ret = _mapper.Map<GetEquipmentResponse>(equip);
-                var response = new ApiResponse<GetEquipmentResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<CreateEquipmentCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -94,7 +93,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPatch]
-        public IActionResult UpdateEquipment(UpdateEquipmentRequest request)
+        public async Task<IActionResult> UpdateEquipment(UpdateEquipmentRequest request)
         {
             try
             {
@@ -106,15 +105,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var equip = _service.EquipmentUpdate(request.Description, request.NewDescription);
-                var ret = _mapper.Map<GetEquipmentResponse>(equip);
-                var response = new ApiResponse<GetEquipmentResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<UpdateEquipmentCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -129,7 +123,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteEquipment(GetEquipmentRequest request)
+        public async Task<IActionResult> DeleteEquipment(GetEquipmentRequest request)
         {
             try
             {
@@ -141,15 +135,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var equip = _service.Delete(request.Name);
-                var ret = _mapper.Map<GetEquipmentResponse>(equip);
-                var response = new ApiResponse<GetEquipmentResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<DeleteEquipmentCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {

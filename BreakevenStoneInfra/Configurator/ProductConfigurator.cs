@@ -13,6 +13,8 @@ namespace BreakevenStoneInfra
             builder
                 .ToTable("Product");
             builder
+                .HasKey(x => x.Id);
+            builder
                 .Property(p => p.Id)
                 .HasColumnName("Id_Product");
             builder

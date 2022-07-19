@@ -22,10 +22,14 @@ namespace BreakevenStoneApplication.Services
 
         public Task Create(CreateUserCommand clientDto)
         {
-            var user = new User(clientDto.Password, clientDto.FirstName.ToLower().Trim(), clientDto.FirstName.ToLower().Trim(), clientDto.Cpf, clientDto.Birthday, string.Empty, clientDto.Email);
+            var user = new User(clientDto.Password, clientDto.FirstName, 
+                clientDto.LastName, clientDto.Cpf, 
+                clientDto.Birthday, "rua camargos", clientDto.Email);
             if (user.IsValid)
+            {
+                _repository.Create(user);
                 return Task.CompletedTask;
-
+            }
             foreach (var notification in user.Notifications)
                 Console.WriteLine($"{notification.Key} : {notification.Message}");    
             return null;

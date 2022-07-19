@@ -1,10 +1,12 @@
 ﻿using BreakevenStoneDomain.Entities;
 using BreakevenStoneInfra;
+using BreakevenStoneRepository.Interfaces;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneRepository.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
         public ApplicationContext AppContext;
 
@@ -13,14 +15,15 @@ namespace BreakevenStoneRepository.Repositories
             AppContext = appContext;
         }
 
-        public void Create(Product productAdd)
+        public Task Create(Product productAdd)
         {
             AppContext.Database.EnsureCreated();
             AppContext.Product.Add(productAdd);
             AppContext.SaveChanges();
+            return Task.CompletedTask;
         }
 
-        public Product GetByName(string name)
+        public Product Get(string name)
         {
             AppContext.Database.EnsureCreated();
             var prodf = AppContext.Product
@@ -31,26 +34,26 @@ namespace BreakevenStoneRepository.Repositories
             return null;
         }
 
-        public Product Update(string name, string newDescription)
+        public Task Update(string name, string newDescription)
         {
             var prod = AppContext.Product.First(p => p.Name == name);
             if (prod != null)
             {
                 AppContext.Product.Where(p => p.Name == name).ToList().ForEach(p => p.Status = newDescription);
                 AppContext.SaveChanges();
-                return prod;
+                return Task.CompletedTask;
             }
             return null;
         }
 
-        public Product Delete(string name)
+        public Task Delete(string name)
         {
             var product = AppContext.Product.Where(p => p.Name == name).FirstOrDefault();
             if (product != null)
             {
                 AppContext.Product.Remove(product);
                 AppContext.SaveChanges();
-                return product;
+                return Task.CompletedTask;
             }
             return null;
         }
