@@ -1,6 +1,8 @@
+using BreakevenStoneApplication.Interfaces;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Interfaces;
 using BreakevenStoneInfra;
+using BreakevenStoneRepository.Interfaces;
 using BreakevenStoneRepository.Repositories;
 using DemoMediatR.Application.Core;
 using FluentValidation;
@@ -42,6 +44,8 @@ namespace BreakevenStoneApi
             services.AddScoped<ProductRepository, ProductRepository>();
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
             services.AddScoped<IUserRepository, ClientService>();
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             AddApplicationServices(services);
             services.AddSwaggerGen(c =>
             {
