@@ -1,15 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
-using BreakevenStoneDomain.Interfaces;
 using BreakevenStoneRepository.Repositories;
+using System;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneApplication.Services
 {
-    public class ClientService : IUserRepository
+    public class ClientService
     {
         private ClientRepository _repository;
         private IMapper _mapper;
@@ -22,8 +21,8 @@ namespace BreakevenStoneApplication.Services
 
         public Task Create(CreateUserCommand clientDto)
         {
-            var user = new User(clientDto.Password, clientDto.FirstName, 
-                clientDto.LastName, clientDto.Cpf, 
+            var user = new User(clientDto.Password, clientDto.FirstName,
+                clientDto.LastName, clientDto.Cpf,
                 clientDto.Birthday, "rua camargos", clientDto.Email);
             if (user.IsValid)
             {
@@ -31,7 +30,7 @@ namespace BreakevenStoneApplication.Services
                 return Task.CompletedTask;
             }
             foreach (var notification in user.Notifications)
-                Console.WriteLine($"{notification.Key} : {notification.Message}");    
+                Console.WriteLine($"{notification.Key} : {notification.Message}");
             return null;
         }
 

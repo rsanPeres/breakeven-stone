@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BreakevenStoneInfra\BreakevenStoneInfra.csproj" />
+      <ProjectReference Include="..\BreakevenStoneWorker\BreakevenStoneWorker.csproj" />
     </ItemGroup>
 
 </Project>

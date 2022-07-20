@@ -1,9 +1,8 @@
-using BreakevenStoneApplication.Interfaces;
 using BreakevenStoneApplication.Services;
-using BreakevenStoneDomain.Interfaces;
 using BreakevenStoneInfra;
 using BreakevenStoneRepository.Interfaces;
 using BreakevenStoneRepository.Repositories;
+using BreakevenStoneRepositoty.Interfaces;
 using DemoMediatR.Application.Core;
 using FluentValidation;
 using MediatR;
@@ -43,7 +42,8 @@ namespace BreakevenStoneApi
             services.AddScoped<EmployeeRepository, EmployeeRepository>();
             services.AddScoped<ProductRepository, ProductRepository>();
             services.AddScoped<EquipmentRepository, EquipmentRepository>();
-            services.AddScoped<IUserRepository, ClientService>();
+            services.AddScoped<IUserRepository, ClientRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             AddApplicationServices(services);
@@ -74,7 +74,7 @@ namespace BreakevenStoneApi
 
         private static void AddApplicationServices(IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, ClientService>();
+            services.AddScoped<IUserRepository, ClientRepository>();
             AddMediatr(services);
         }
 
