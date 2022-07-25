@@ -12,7 +12,7 @@ using BreakevenStoneRepository.Repositories;
 
 namespace BreakevenStoneApplication.CommandHandlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Response>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Unit>
     {
         private ClientRepository _repository;
 
@@ -21,7 +21,7 @@ namespace BreakevenStoneApplication.CommandHandlers
             _repository = repository;
         }
 
-        public async Task<Response> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = new User(request.Password, request.FirstName,
                 request.LastName, request.Cpf,
@@ -29,9 +29,8 @@ namespace BreakevenStoneApplication.CommandHandlers
             if (user.IsValid)
             {
                 await _repository.Create(user);
-                return new Response("Success");
             }
-            return new Response("Error");
+            return Unit.Value;
         }
     }
 }

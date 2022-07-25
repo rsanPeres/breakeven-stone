@@ -5,6 +5,7 @@ using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
 using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities.Dtos;
+using Credit.NetCore.Framework.Cqrs.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,15 +18,17 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/user")]
     public class UserController : Controller
     {
+        private readonly ICommandScheduler _commandScheduler;
         private readonly IMediator _mediator;
 
         private readonly IMapper _mapper;
         private ClientService _service { get; set; }
-        public UserController(ClientService service, IMapper mapper, IMediator mediator)
+        public UserController(ClientService service, IMapper mapper, IMediator mediator, ICommandScheduler commandScheduler)
         {
             _service = service;
             _mapper = mapper;
             _mediator = mediator;
+            _commandScheduler = commandScheduler;
         }
 
         // GET: Client
@@ -80,9 +83,10 @@ namespace BreakevenStoneApi.Controllers
                 }
 
                 var request = _mapper.Map<CreateUserCommand>(userRequest);
-                var response = await _mediator.Send(request).ConfigureAwait(false);
+                await _commandScheduler.RunNow(request);
+                return Ok(result);
 
-                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+                //return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
 
             }
             catch (Exception e)

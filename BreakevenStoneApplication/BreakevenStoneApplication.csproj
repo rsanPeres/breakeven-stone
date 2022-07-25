@@ -20,6 +20,7 @@
       <ProjectReference Include="..\BreakevenStoneDomain\BreakevenStoneDomain.csproj" />
       <ProjectReference Include="..\BreakevenStoneInfra\BreakevenStoneInfra.csproj" />
       <ProjectReference Include="..\BreakevenStoneRepository\BreakevenStoneRepository.csproj" />
-    </ItemGroup>
+	  <PackageReference Include="Credit.NetCore.Framework.Web.Authentication" Version="5.10.7" />
+	</ItemGroup>
 
 </Project>

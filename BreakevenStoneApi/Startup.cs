@@ -3,6 +3,7 @@ using BreakevenStoneInfra;
 using BreakevenStoneRepository.Interfaces;
 using BreakevenStoneRepository.Repositories;
 using BreakevenStoneRepositoty.Interfaces;
+using Credit.NetCore.Framework.Web.Extensions;
 using DemoMediatR.Application.Core;
 using FluentValidation;
 using MediatR;
@@ -51,6 +52,8 @@ namespace BreakevenStoneApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BreakevenStoneApi", Version = "v1" });
             });
+            services.ConfigureBus(Configuration);
+            services.ConfigureNewRelic(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
