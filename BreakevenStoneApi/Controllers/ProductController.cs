@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.ProductRequests;
 using BreakevenStoneApi.Controllers.Requests.Validators.ProductValidators;
-using BreakevenStoneApi.Controllers.Requests.Validators.UserValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
-using BreakevenStoneDomain.Entities.Dtos;
-using FluentValidation;
+using BreakevenStoneDomain.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneApi.Controllers
 {
@@ -15,13 +16,15 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/product")]
     public class ProductController : Controller
     {
+        private readonly IMediator _mediator;
         private IMapper _mapper;
         private ProductService _service { get; set; }
 
-        public ProductController(ProductService service, IMapper mapper)
+        public ProductController(ProductService service, IMapper mapper, IMediator mediator)
         {
             _service = service;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -44,7 +47,7 @@ namespace BreakevenStoneApi.Controllers
                     Success = true,
                     Data = ret,
                     Messages = null
-            };
+                };
                 return Ok(response);
             }
             catch (Exception e)
@@ -60,7 +63,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProductCreate(ProductRequest productCreate)
+        public async Task<IActionResult> ProductCreate(ProductRequest productCreate)
         {
             try
             {
@@ -72,16 +75,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var dto = _mapper.Map<ProductDto>(productCreate);
-                var prod = _service.ProductAdd(dto);
-                var ret = _mapper.Map<GetProductResponse>(prod);
-                var response = new ApiResponse<GetProductResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<CreateProductCommand>(productCreate);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -97,7 +94,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPatch]
-        public IActionResult UpdateProduct(UpdateProductRequest request)
+        public async Task<IActionResult> UpdateProduct(UpdateProductRequest request)
         {
             try
             {
@@ -109,15 +106,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var prod = _service.ProductUpdate(request.Name, request.NewName, request.DateOut);
-                var ret = _mapper.Map<GetProductResponse>(prod);
-                var response = new ApiResponse<GetProductResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<UpdateProductCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {
@@ -133,7 +125,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DelelteProduct(DeleteProductRequest request)
+        public async Task<IActionResult> DelelteProduct(DeleteProductRequest request)
         {
             try
             {
@@ -145,15 +137,10 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var prod = _service.DelProductByName(request.Name);
-                var ret = _mapper.Map<GetProductResponse>(prod);
-                var response = new ApiResponse<GetProductResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var reques = _mapper.Map<DeleteProductCommand>(request);
+                var response = await _mediator.Send(reques).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
             }
             catch (Exception e)
             {

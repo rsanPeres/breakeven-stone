@@ -13,6 +13,8 @@ namespace BreakevenStoneInfra
             builder
                 .ToTable("Product");
             builder
+                .HasKey(x => x.Id);
+            builder
                 .Property(p => p.Id)
                 .HasColumnName("Id_Product");
             builder
@@ -31,6 +33,8 @@ namespace BreakevenStoneInfra
                 .Property(p => p.Price).HasColumnName("Price_Product")
                 .HasColumnType("float");
 
+            builder.Ignore(x => x.Notifications);
+            builder.Ignore(x => x.IsValid);
         }
     }
 }

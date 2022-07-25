@@ -10,13 +10,16 @@ namespace BreakevenStoneInfra.Configurator
         {
             builder
                 .ToTable("Employee");
+            //builder
+              //  .Property(p => p.EmployeeId).HasColumnName("Id_Employee");
             builder
-                .Property(p => p.EmployeeId).HasColumnName("Id_Employee");
-            builder
-                .Property(p => p.Fuction).HasColumnName("Function_Employee")
+                .Property(p => p.Function).HasColumnName("Function_Employee")
                 .HasColumnType("varchar(50)").IsRequired();
             builder
                 .Property(p => p.Salary).HasColumnName("Salary").HasColumnType("float");
+            
+            //builder.Ignore(x => x.Notifications);
+            //builder.Ignore(x => x.IsValid);
         }
     }
 }

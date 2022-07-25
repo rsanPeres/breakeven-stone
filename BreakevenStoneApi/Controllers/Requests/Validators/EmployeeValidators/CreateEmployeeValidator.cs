@@ -9,8 +9,7 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators.EmployeeValidators
         {
             RuleFor(p => p.CPF)
                 .NotNull()
-                .MaximumLength(11)
-                .MinimumLength(11)
+                .IsValidCPF()
                 .NotEmpty();
 
             RuleFor(p => p.FirstName)

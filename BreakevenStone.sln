@@ -1,16 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneApi", "BreakevenStoneApi\BreakevenStoneApi.csproj", "{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneApi", "BreakevenStoneApi\BreakevenStoneApi.csproj", "{07E0E6F0-11E1-40F7-9ADB-FCD51626E435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneDomain", "BreakevenStoneDomain\BreakevenStoneDomain.csproj", "{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneDomain", "BreakevenStoneDomain\BreakevenStoneDomain.csproj", "{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneWorker", "BreakevenStoneWorker\BreakevenStoneWorker.csproj", "{D616A26D-0C07-478C-A944-BF22FAA9243B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneRepository", "BreakevenStoneRepository\BreakevenStoneRepository.csproj", "{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneRepository", "BreakevenStoneRepository\BreakevenStoneRepository.csproj", "{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneApplication", "BreakevenStoneApplication\BreakevenStoneApplication.csproj", "{04514788-D218-4293-815D-FB94CA2F833B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneApplication", "BreakevenStoneApplication\BreakevenStoneApplication.csproj", "{04514788-D218-4293-815D-FB94CA2F833B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneInfra", "BreakevenStoneInfra\BreakevenStoneInfra.csproj", "{4EF33F5B-1EE1-470B-B7A5-735086A1B155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreakevenStoneInfra", "BreakevenStoneInfra\BreakevenStoneInfra.csproj", "{4EF33F5B-1EE1-470B-B7A5-735086A1B155}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1F85AC5F-7120-40DB-A53F-E889EDB80D64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneDomain.UnitTests", "BreakevenStoneDomain.UnitTests\BreakevenStoneDomain.UnitTests.csproj", "{D4C4FA78-32AF-425D-B459-47B613EF7C2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreakevenStoneApplication.UnitTest", "BreakevenStoneApplication.UnitTest\BreakevenStoneApplication.UnitTest.csproj", "{74744E70-B7B4-4FA7-81F6-DD28CF06980E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +33,6 @@ Global
 		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B3F4371-8F65-4D02-97B2-1F81B21F5C9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D616A26D-0C07-478C-A944-BF22FAA9243B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C30B951E-A5D1-4FCB-82B4-80B7DA3DF751}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,5 +45,23 @@ Global
 		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EF33F5B-1EE1-470B-B7A5-735086A1B155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C4FA78-32AF-425D-B459-47B613EF7C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C4FA78-32AF-425D-B459-47B613EF7C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C4FA78-32AF-425D-B459-47B613EF7C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C4FA78-32AF-425D-B459-47B613EF7C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74744E70-B7B4-4FA7-81F6-DD28CF06980E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74744E70-B7B4-4FA7-81F6-DD28CF06980E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74744E70-B7B4-4FA7-81F6-DD28CF06980E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74744E70-B7B4-4FA7-81F6-DD28CF06980E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D4C4FA78-32AF-425D-B459-47B613EF7C2D} = {1F85AC5F-7120-40DB-A53F-E889EDB80D64}
+		{74744E70-B7B4-4FA7-81F6-DD28CF06980E} = {1F85AC5F-7120-40DB-A53F-E889EDB80D64}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B094EDB3-69EE-42A0-B5E9-D9083AF23466}
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,11 @@
 using BreakevenStoneApplication.Services;
 using BreakevenStoneInfra;
+using BreakevenStoneRepository.Interfaces;
+using BreakevenStoneRepository.Repositories;
+using BreakevenStoneRepositoty.Interfaces;
+using DemoMediatR.Application.Core;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Reflection;
 
 namespace BreakevenStoneApi
 {
@@ -31,6 +38,15 @@ namespace BreakevenStoneApi
             services.AddScoped<EmployeeService, EmployeeService>();
             services.AddScoped<ProductService, ProductService>();
             services.AddScoped<EquipmentService, EquipmentService>();
+            services.AddScoped<ClientRepository, ClientRepository>();
+            services.AddScoped<EmployeeRepository, EmployeeRepository>();
+            services.AddScoped<ProductRepository, ProductRepository>();
+            services.AddScoped<EquipmentRepository, EquipmentRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            AddApplicationServices(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BreakevenStoneApi", Version = "v1" });
@@ -54,6 +70,25 @@ namespace BreakevenStoneApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private static void AddApplicationServices(IServiceCollection services)
+        {
+            services.AddScoped<IClientRepository, ClientRepository>();
+            AddMediatr(services);
+        }
+
+        private static void AddMediatr(IServiceCollection services)
+        {
+            var applicationAssemblyName = Assembly.Load("BreakevenStoneApplication");
+
+            AssemblyScanner
+                .FindValidatorsInAssembly(applicationAssemblyName)
+                .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
+
+            services.AddMediatR(applicationAssemblyName);
         }
     }
 }

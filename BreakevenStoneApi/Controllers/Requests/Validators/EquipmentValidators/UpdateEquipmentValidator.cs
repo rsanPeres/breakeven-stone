@@ -7,12 +7,12 @@ namespace BreakevenStoneApi.Controllers.Requests.Validators.EquipmentValidators
     {
         public UpdateEquipmentValidator()
         {
-            RuleFor(p => p.Name)
-                .MinimumLength(2)
+            RuleFor(p => p.Description)
+                .MinimumLength(3)
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(p => p.NewName)
+            RuleFor(p => p.NewDescription)
                 .MinimumLength(2)
                 .NotNull();
 

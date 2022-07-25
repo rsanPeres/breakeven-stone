@@ -3,9 +3,13 @@ using BreakevenStoneApi.Controllers.Requests.UserRequests;
 using BreakevenStoneApi.Controllers.Requests.Validators.UserValidators;
 using BreakevenStoneApi.Controllers.Responses;
 using BreakevenStoneApplication.Services;
+using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BreakevenStoneApi.Controllers
 {
@@ -13,17 +17,20 @@ namespace BreakevenStoneApi.Controllers
     [Route("api/v1/user")]
     public class UserController : Controller
     {
+        private readonly IMediator _mediator;
+
         private readonly IMapper _mapper;
         private ClientService _service { get; set; }
-        public UserController(ClientService service, IMapper mapper)
+        public UserController(ClientService service, IMapper mapper, IMediator mediator)
         {
             _service = service;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         // GET: Client
         [HttpGet]
-        public IActionResult UserGetByName(GetUserRequest userRequest)
+        public IActionResult GetUser(GetUserRequest userRequest)
         {
             try
             {
@@ -35,15 +42,17 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var user = _service.ClientGetByName(userRequest.FirstName);
+                UserDto userDto = _mapper.Map<UserDto>(userRequest);
+                var user = _service.Get(userDto);
                 var ret = _mapper.Map<GetUserResponse>(user);
+
                 var response = new ApiResponse<GetUserResponse>()
                 {
                     Success = true,
                     Data = ret,
                     Messages = null
                 };
-                return Ok(response);
+                return Ok(response.Messages);
             }
             catch (Exception e)
             {
@@ -58,29 +67,23 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserCreate(UserRequest userRequest)
+        public async Task<IActionResult> CreateUser(UserRequest userRequest)
         {
             try
             {
                 CreateUserValidator validator = new CreateUserValidator();
 
                 var result = validator.Validate(userRequest);
-                if(result.IsValid == false)
+                if (result.IsValid == false)
                 {
                     throw new Exception(result.ToString());
                 }
-                
-                var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientAdd(userDto);
-                var ret = _mapper.Map<GetUserResponse>(user);
 
-                var response = new ApiResponse<GetUserResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                var request = _mapper.Map<CreateUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+
             }
             catch (Exception e)
             {
@@ -95,7 +98,7 @@ namespace BreakevenStoneApi.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Update(UpdateUserRequest userRequest)
+        public async Task<IActionResult> UpdateUser(UpdateUserRequest userRequest)
         {
             try
             {
@@ -107,17 +110,11 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientUpdate(userDto);
-                var ret = _mapper.Map<GetUserResponse>(user);
+                var request = _mapper.Map<UpdateUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
 
-                var response = new ApiResponse<GetUserResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+
             }
             catch (Exception e)
             {
@@ -131,10 +128,8 @@ namespace BreakevenStoneApi.Controllers
             }
         }
 
-
-
         [HttpDelete]
-        public IActionResult Delete(DeleteUserRequest userRequest)
+        public async Task<IActionResult> Delete(DeleteUserRequest userRequest)
         {
             try
             {
@@ -146,17 +141,11 @@ namespace BreakevenStoneApi.Controllers
                     throw new Exception(result.ToString());
                 }
 
-                var userDto = _mapper.Map<UserDto>(userRequest);
-                var user = _service.ClientDelbyCpf(userDto);
-                var ret = _mapper.Map<GetUserResponse>(user);
+                var request = _mapper.Map<DeleteUserCommand>(userRequest);
+                var response = await _mediator.Send(request).ConfigureAwait(false);
 
-                var response = new ApiResponse<GetUserResponse>()
-                {
-                    Success = true,
-                    Data = ret,
-                    Messages = null
-                };
-                return Ok(response);
+                return response.Errors.Any() ? BadRequest(response.Errors) : Ok(response.Result);
+
             }
             catch (Exception e)
             {
@@ -167,6 +156,7 @@ namespace BreakevenStoneApi.Controllers
                     Messages = e.Message
                 };
                 return BadRequest(response);
+
             }
         }
     }

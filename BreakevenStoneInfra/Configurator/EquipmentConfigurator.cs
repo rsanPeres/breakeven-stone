@@ -13,6 +13,8 @@ namespace BreakevenStoneInfra.Configurator
             builder
                 .ToTable("Equipment");
             builder
+                .HasKey(x => x.Id);
+            builder
                 .Property(p => p.Id)
                 .HasColumnName("Id_Equipment");
             builder
@@ -26,6 +28,9 @@ namespace BreakevenStoneInfra.Configurator
                 .HasColumnType("varchar(100)");
             builder
                 .Property(p => p.Price).HasColumnName("Price").HasColumnType("float");
+
+            builder.Ignore(x => x.Notifications);
+            builder.Ignore(x => x.IsValid);
         }
     }
 }

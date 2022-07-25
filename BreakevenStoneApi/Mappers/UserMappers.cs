@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.UserRequests;
 using BreakevenStoneApi.Controllers.Responses;
+using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 
@@ -18,6 +19,11 @@ namespace BreakevenStoneApi.Mappers
             GetRequestToDto();
             UserToGetResponse();
             DeleteUserRequestToUserDto();
+            GetUserRequestToCreateUserCommand();
+            CreateUserCommandToGetUserRequest();
+            UserRequestToCreateUserCommand();
+            UpdateUserRequestToUpUserCommand();
+            DeleteUserRequestTodelUserCommand();
         }
 
         private void RequestToUserDto()
@@ -74,5 +80,34 @@ namespace BreakevenStoneApi.Mappers
                 .ReverseMap();
         }
 
+        private void GetUserRequestToCreateUserCommand()
+        {
+            CreateMap<UserRequest, CreateUserCommand>()
+                .ReverseMap();
+        }
+
+        private void CreateUserCommandToGetUserRequest()
+        {
+            CreateMap<CreateUserCommand, UserRequest>()
+                .ReverseMap();
+        }
+
+        private void UserRequestToCreateUserCommand()
+        {
+            CreateMap<UserRequest, CreateUserCommand>()
+                .ReverseMap();
+        }
+
+        private void UpdateUserRequestToUpUserCommand()
+        {
+            CreateMap<UpdateUserRequest, UpdateUserCommand>()
+                .ReverseMap();
+        }
+
+        private void DeleteUserRequestTodelUserCommand()
+        {
+            CreateMap<DeleteUserRequest, DeleteUserCommand>()
+                .ReverseMap();
+        }
     }
 }

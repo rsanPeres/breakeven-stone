@@ -6,6 +6,6 @@ namespace BreakevenStoneApi.Controllers.Requests.ProductRequests
     {
         public DateTime DateOut { get; set; }
         public string Name { get; set; }
-        public string NewName { get; set; }
+        public string Status { get; set; }
     }
 }

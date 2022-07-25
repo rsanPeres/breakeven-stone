@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BreakevenStoneApi.Controllers.Requests.EmployeeRequests;
 using BreakevenStoneApi.Controllers.Responses;
+using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
 using BreakevenStoneDomain.Entities.Dtos;
 
@@ -14,6 +15,8 @@ namespace BreakevenStoneApi.Mappers
             EmployeeToDto();
             DtoToResponse();
             CreateEmployeeRequestToDto();
+            CreateEmployeeRequestToCreateEmployeeCommand();
+            UpdateEmployeeRequestToUpEmployeeCommand();
         }
 
         private void RequestToDto()
@@ -39,6 +42,24 @@ namespace BreakevenStoneApi.Mappers
         private void CreateEmployeeRequestToDto()
         {
             CreateMap<CreateEmployeeRequest, EmployeeDto>()
+                .ReverseMap();
+        }
+
+        private void CreateEmployeeRequestToCreateEmployeeCommand()
+        {
+            CreateMap<CreateEmployeeRequest, CreateEmployeeCommand>()
+                .ReverseMap();
+        }
+
+        private void UpdateEmployeeRequestToUpEmployeeCommand()
+        {
+            CreateMap<UpdateEmployeeRequest, UpdateEmployeeCommand>()
+                .ReverseMap();
+        }
+
+        private void GetEmployeeRequestToDeleteEmployeeCommand()
+        {
+            CreateMap<GetEmployeeRequest, DeleteEmployeeCommand>()
                 .ReverseMap();
         }
     }
