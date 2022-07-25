@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BreakevenStoneRepository.Repositories
 {
-    public class ClientRepository : IUserRepository
+    public class ClientRepository : IClientRepository
     {
         public ApplicationContext AppContext;
 

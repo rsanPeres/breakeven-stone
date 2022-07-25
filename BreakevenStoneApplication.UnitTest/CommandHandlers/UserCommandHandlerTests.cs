@@ -2,9 +2,14 @@
 using BreakevenStoneApplication.CommandHandlers;
 using BreakevenStoneDomain.Commands;
 using BreakevenStoneDomain.Entities;
+using BreakevenStoneInfra;
 using BreakevenStoneRepository.Repositories;
+using BreakevenStoneRepositoty.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BreakevenStoneApplication.UnitTest.CommandHandlers
@@ -13,21 +18,28 @@ namespace BreakevenStoneApplication.UnitTest.CommandHandlers
     {
         private CreateUserCommandHandler _createHandler;
         private Fixture _fixture;
-        private Mock<ClientRepository> _repository;
+        private Mock<IClientRepository> _repository;
+        private Mock<DbContext> _context;
 
         public UserCommandHandlerTests()
         {
             _fixture = new Fixture();
-            _createHandler = _fixture.Create<CreateUserCommandHandler>();
-            _repository = new Mock<ClientRepository>();
+            _repository = new Mock<IClientRepository>();
+            _context = new Mock<DbContext>();
+            var rep = new ClientRepository(_context.Object);
+            _createHandler = new CreateUserCommandHandler(rep);
         }
 
         [Fact]
-        public async void CreateEmployeeCommandHandler_GivenAnCommand_ShouldSaveDataBase()
+        public async Task CreateEmployeeCommandHandler_GivenAnUserCommand_ShouldSaveDataBaseAsync()
         {
             var command = _fixture.Create<CreateUserCommand>();
+            _repository.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.CompletedTask);
+            
+            var act = await _createHandler.Handle(command, CancellationToken.None);
 
-            await _createHandler.Handle(command, CancellationToken.None);
+            Assert.IsType<Response>(act);
+            act.Result.Equals(new Response("Success"));
             _repository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
 
         }

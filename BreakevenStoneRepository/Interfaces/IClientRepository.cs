@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BreakevenStoneRepositoty.Interfaces
 {
-    public interface IUserRepository
+    public interface IClientRepository
     {
         Task Create(User user);
         public User Get(string cpf);
